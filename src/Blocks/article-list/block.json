@@ -1,0 +1,59 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/article-list",
+    "title": "Article List",
+    "category": "mustuse-apps-pub",
+    "description": "Displays a list of articles from a mapped content source. Renders as a native scrollable list in the shell.",
+    "icon": "list-view",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "postType",
+                "type": "select",
+                "label": "Post Type",
+                "default": "post",
+                "options": [
+                    {
+                        "label": "Post",
+                        "value": "post"
+                    },
+                    {
+                        "label": "Page",
+                        "value": "page"
+                    }
+                ]
+            },
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Number of Articles",
+                "default": 10
+            },
+            {
+                "id": "category",
+                "type": "number",
+                "label": "Category ID",
+                "default": 0,
+                "help": "Leave at 0 to show all categories."
+            },
+            {
+                "id": "showExcerpt",
+                "type": "toggle",
+                "label": "Show Excerpt",
+                "default": true
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

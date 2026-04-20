@@ -1,0 +1,33 @@
+.mua-native-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    margin: var(--mua-space-sm) 0;
+    background: var(--mua-color-accent);
+    color: #fff;
+    border: 0;
+    border-radius: var(--mua-radius-md);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+
+    &:hover  { filter: brightness(1.05); }
+    &:active { transform: translateY(1px); }
+
+    &__fallback { display: none; }
+
+    &__result {
+        margin: 8px 0 0;
+        padding: 10px 12px;
+        background: var(--mua-color-surface, rgba(0,0,0,.04));
+        border-radius: var(--mua-radius-sm, 6px);
+        font-size: 12px;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 4px 10px;
+
+        dt { font-weight: 600; color: var(--mua-color-muted, #666); }
+        dd { margin: 0; word-break: break-word; }
+    }
+}

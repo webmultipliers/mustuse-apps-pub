@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Taxonomy terms attached to the current post, rendered as pills.",
+    "consumes_context": "post",
+    "field": "terms"
+}

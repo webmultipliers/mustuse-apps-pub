@@ -1,0 +1,33 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/push-enroll",
+    "title": "Push Enrollment",
+    "category": "mustuse-apps-pub",
+    "description": "Opt-in prompt that triggers the OS push permission dialog and enrolls the device token with the publisher. Drop on a settings or welcome screen.",
+    "icon": "megaphone",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "title",
+                "type": "text",
+                "label": "Title",
+                "default": "Stay in the loop"
+            },
+            {
+                "id": "description",
+                "type": "textarea",
+                "label": "Description",
+                "default": "Enable notifications to get alerts for breaking stories."
+            },
+            {
+                "id": "enableLabel",
+                "type": "text",
+                "label": "Enable Button Label",
+                "default": "Enable notifications"
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": [ "push_notifications" ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "description": "List of articles fetched live from the pub's /content endpoint. The shell's DynamicBlock Livewire component hydrates `items` at render time; pull-to-refresh invalidates the cache and re-fetches.",
+    "dataSource": {
+        "kind": "posts",
+        "endpoint": "content",
+        "method": "GET",
+        "params": {
+            "post_type": "{{ attributes.postType }}",
+            "per_page": "{{ attributes.count }}",
+            "category": "{{ attributes.category }}"
+        },
+        "bind": "items",
+        "ttl": 300,
+        "swr": true
+    }
+}

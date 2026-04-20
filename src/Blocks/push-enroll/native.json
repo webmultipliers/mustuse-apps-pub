@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Push-notification opt-in prompt. Invokes NativePHP's PushNotifications::enroll on click; the #[OnNative(TokenGenerated)] listener syncs the returned token to /push/enroll keyed by X-MUA-Device-Id.",
+    "required_capability": "push_notifications"
+}

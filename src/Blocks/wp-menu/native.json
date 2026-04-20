@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "description": "WordPress nav menu mirrored into the shell. Fetched live from /menus/{location} — the location is injected into the path, not a query param.",
+    "dataSource": {
+        "kind": "menu",
+        "endpoint": "menu",
+        "method": "GET",
+        "path_params": {
+            "location": "{{ attributes.location }}"
+        },
+        "bind": "items",
+        "ttl": 1800,
+        "swr": true
+    }
+}

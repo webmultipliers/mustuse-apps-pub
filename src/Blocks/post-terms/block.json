@@ -1,0 +1,32 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-terms",
+    "title": "Post Terms",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's categories and tags as clickable pills.",
+    "icon": "tag",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "taxonomy",
+                "type": "select",
+                "label": "Taxonomy",
+                "default": "category",
+                "options": [
+                    { "label": "Category", "value": "category" },
+                    { "label": "Tag",      "value": "post_tag" },
+                    { "label": "All",      "value": "any" }
+                ]
+            },
+            {
+                "id": "max",
+                "type": "number",
+                "label": "Max Terms",
+                "default": 5
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

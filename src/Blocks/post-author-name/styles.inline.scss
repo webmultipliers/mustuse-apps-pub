@@ -1,0 +1,15 @@
+.mua-post-author-name {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mua-color-text);
+    margin-right: var(--mua-space-sm);
+
+    &__prefix {
+        color: var(--mua-color-muted);
+        font-weight: 400;
+        margin-right: 4px;
+    }
+
+    a { color: inherit; }
+}

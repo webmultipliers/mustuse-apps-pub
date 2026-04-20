@@ -1,0 +1,14 @@
+.mua-image {
+    margin: var(--mua-space-md) 0;
+
+    &__img {
+        border-radius: var(--mua-radius-sm);
+    }
+
+    &__caption {
+        font-size: 13px;
+        color: var(--mua-color-muted);
+        margin-top: 6px;
+        text-align: center;
+    }
+}

@@ -1,0 +1,46 @@
+// Design tokens — MustUse Apps
+// Canonical source: vision/design-system.md in the context repo.
+// Implemented as CSS custom properties for runtime override by publisher developers.
+
+:root {
+    // --- Color ---
+    --mua-ink:             #1e1e1e;
+    --mua-ink-muted:       #646970;
+    --mua-paper:           #ffffff;
+    --mua-paper-alt:       #f0f0f1;
+    --mua-hairline:        #c3c4c7;
+    --mua-hairline-light:  #e0e0e0;
+    --mua-accent:          #2271b1;
+    --mua-accent-hover:    #135e96;
+    --mua-success:         #00a32a;
+    --mua-warning:         #dba617;
+    --mua-danger:          #d63638;
+    --mua-bifrost:         #6b21a8;
+
+    // --- Type scale (1.25 ratio, 15px body anchor) ---
+    --mua-type-display-lg: 2rem;      // 32px
+    --mua-type-display:    1.5rem;    // 24px
+    --mua-type-heading:    1.125rem;  // 18px
+    --mua-type-body:       0.9375rem; // 15px
+    --mua-type-small:      0.8125rem; // 13px
+    --mua-type-caption:    0.6875rem; // 11px
+    --mua-type-mono:       0.8125rem; // 13px
+
+    // --- Spacing (base-4) ---
+    --mua-space-xs:  4px;
+    --mua-space-sm:  8px;
+    --mua-space-md:  16px;
+    --mua-space-lg:  24px;
+    --mua-space-xl:  32px;
+    --mua-space-2xl: 48px;
+    --mua-space-3xl: 64px;
+
+    // --- Radius ---
+    --mua-radius:    6px;
+    --mua-radius-sm: 4px;
+
+    // --- Font families ---
+    --mua-font-display: 'Playfair Display', Georgia, serif;
+    --mua-font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mua-font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+}

@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Featured image from current context post.",
+    "consumes_context": "post",
+    "field": "featured_image"
+}

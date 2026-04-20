@@ -1,0 +1,15 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub-canvas/navigation-preview",
+    "title": "Navigation Preview",
+    "category": "mustuse-apps-pub-canvas",
+    "description": "Previews the app's navigation as it will be exposed to shells.",
+    "icon": "menu",
+    "supports": {
+        "html": false,
+        "multiple": false,
+        "reusable": false
+    },
+    "attributes": {}
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-comments",
+    "title": "Post Comments",
+    "category": "mustuse-apps-pub",
+    "description": "Shows the post's approved comment thread. Only renders when the App has Comments enabled and the post's own comment_status is open.",
+    "icon": "admin-comments",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "heading",
+                "type": "text",
+                "label": "Heading",
+                "default": "Comments"
+            },
+            {
+                "id": "emptyText",
+                "type": "text",
+                "label": "Empty state",
+                "default": "Be the first to comment."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,37 @@
+.mua-screen-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    margin: 8px 0;
+    background: var(--mua-color-surface, #fff);
+    border: 1px solid var(--mua-color-surface-alt, rgba(0,0,0,.08));
+    border-radius: var(--mua-radius-md, 8px);
+    text-decoration: none;
+    color: var(--mua-color-text, #111);
+
+    &:hover {
+        border-color: var(--mua-color-accent, #2271b1);
+        transform: translateY(-1px);
+    }
+
+    &__body {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    &__label {
+        font-weight: 600;
+        font-size: 15px;
+    }
+    &__description {
+        font-size: 13px;
+        color: var(--mua-color-muted, #666);
+    }
+    &__chevron {
+        color: var(--mua-color-muted, #999);
+        font-size: 24px;
+        line-height: 1;
+    }
+}

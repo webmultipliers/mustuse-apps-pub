@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Post publication date.",
+    "consumes_context": "post",
+    "field": "date"
+}

@@ -1,0 +1,396 @@
+name: Build and Release Plugin
+
+on:
+  push:
+    branches:
+      - main
+      - development
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      variants:
+        description: 'Comma-separated build variants (e.g. full,lite). Default: full'
+        required: false
+        default: 'full'
+      force:
+        description: 'Rebuild even if release exists'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  # ==========================================
+  # JOB 1: Test (gates everything downstream)
+  # ==========================================
+  # Runs on every trigger — PR, push, tag, manual. Tests must pass before
+  # a release is created.
+  test:
+    name: Test (PHP ${{ matrix.php }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.2', '8.3']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ matrix.php }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ matrix.php }}-
+
+      - name: Composer install (with dev)
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: PHPUnit
+        run: composer test:php
+
+      - name: PHPStan
+        run: composer analyse
+
+      - name: PHP-CS-Fixer (dry-run)
+        run: composer lint
+
+      - name: Seam check
+        run: ./tools/seam-check.sh
+
+      - name: Setup Node 20
+        if: matrix.php == '8.3'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: npm ci
+        if: matrix.php == '8.3'
+        run: npm ci
+
+      - name: Vitest
+        if: matrix.php == '8.3'
+        run: npm test
+
+      - name: TypeScript build check
+        if: matrix.php == '8.3'
+        run: npm run build
+
+  # ==========================================
+  # JOB 2: PR Verification (version bump)
+  # ==========================================
+  # Runs ONLY on PRs targeting main. Enforces that the plugin header
+  # version was bumped. Build validation is already covered by the test
+  # job above.
+  pr_verification:
+    name: PR Version Check
+    needs: test
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      MAIN_FILE_PATH: "${{ vars.MAIN_FILE_PATH }}"
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Get PR Version from Header
+        id: pr_version
+        run: |
+          if [ ! -f "${{ env.MAIN_FILE_PATH }}" ]; then
+            echo "::error::File not found at ${{ env.MAIN_FILE_PATH }}"
+            exit 1
+          fi
+          VERSION=$(grep -i '^\s*\*\s*Version:' "${{ env.MAIN_FILE_PATH }}" | awk -F': ' '{print $2}' | tr -d '[:space:]')
+          if [ -z "$VERSION" ]; then
+            echo "::error::Version not found in header."
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout main branch for comparison
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+          path: main_branch
+
+      - name: Get main Version from Header
+        id: main_version
+        run: |
+          if [ ! -f "main_branch/${{ env.MAIN_FILE_PATH }}" ]; then
+            echo "::error::File not found at main_branch/${{ env.MAIN_FILE_PATH }}"
+            exit 1
+          fi
+          VERSION=$(grep -i '^\s*\*\s*Version:' "main_branch/${{ env.MAIN_FILE_PATH }}" | awk -F': ' '{print $2}' | tr -d '[:space:]')
+          if [ -z "$VERSION" ]; then
+            echo "::error::Version not found in header on main."
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure Version Bump
+        run: |
+          PR_VERSION="${{ steps.pr_version.outputs.version }}"
+          MAIN_VERSION="${{ steps.main_version.outputs.version }}"
+          if [ "$PR_VERSION" = "$MAIN_VERSION" ]; then
+            echo "::error::Plugin version in header was not bumped. Current: $MAIN_VERSION"
+            exit 1
+          fi
+
+  # ==========================================
+  # JOB 3: Preflight (computes release metadata)
+  # ==========================================
+  # Runs ONLY on push/tag/dispatch after tests pass.
+  preflight:
+    name: Preflight
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      MAIN_FILE_PATH: "${{ vars.MAIN_FILE_PATH }}"
+
+    outputs:
+      version:       ${{ steps.version.outputs.version }}
+      release_tag:   ${{ steps.prep.outputs.release_tag }}
+      release_name:  ${{ steps.prep.outputs.release_name }}
+      is_prerelease: ${{ steps.prep.outputs.is_prerelease }}
+      make_latest:   ${{ steps.prep.outputs.make_latest }}
+      should_run:    ${{ steps.check_release.outputs.should_run }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Get Version from Header
+        id: version
+        run: |
+          if [ ! -f "${{ env.MAIN_FILE_PATH }}" ]; then
+            echo "::error::File not found at ${{ env.MAIN_FILE_PATH }}"
+            exit 1
+          fi
+          VERSION=$(grep -i '^\s*\*\s*Version:' "${{ env.MAIN_FILE_PATH }}" | awk -F': ' '{print $2}' | tr -d '[:space:]')
+          if [ -z "$VERSION" ]; then
+            echo "::error::Version not found in header."
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Prepare Release Variables
+        id: prep
+        run: |
+          BASE_VERSION="${{ steps.version.outputs.version }}"
+          REF_TYPE="${{ github.ref_type }}"
+          REF_NAME="${{ github.ref_name }}"
+
+          if [ "$REF_TYPE" = "tag" ]; then
+            if [ "$REF_NAME" != "v${BASE_VERSION}" ]; then
+              echo "::error::Tag ($REF_NAME) does not match Plugin Header Version (v${BASE_VERSION}). Update the file first."
+              exit 1
+            fi
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+            echo "make_latest=true" >> "$GITHUB_OUTPUT"
+            echo "release_tag=${REF_NAME}" >> "$GITHUB_OUTPUT"
+            echo "release_name=Release ${BASE_VERSION}" >> "$GITHUB_OUTPUT"
+          elif [ "$REF_TYPE" = "branch" ] && [ "$REF_NAME" = "main" ]; then
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+            echo "make_latest=true" >> "$GITHUB_OUTPUT"
+            echo "release_tag=v${BASE_VERSION}" >> "$GITHUB_OUTPUT"
+            echo "release_name=Release ${BASE_VERSION}" >> "$GITHUB_OUTPUT"
+          else
+            SAFE_BRANCH=$(echo "$REF_NAME" | tr ' /' '--')
+            SHORT_SHA=$(git rev-parse --short HEAD)
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+            echo "make_latest=false" >> "$GITHUB_OUTPUT"
+            echo "release_tag=v${BASE_VERSION}-${SAFE_BRANCH}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+            echo "release_name=Pre-release ${BASE_VERSION} (${REF_NAME})" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check if Release Exists
+        id: check_release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FORCE="${{ github.event.inputs.force }}"
+          if gh release view "${{ steps.prep.outputs.release_tag }}" >/dev/null 2>&1; then
+            if [ "$FORCE" = "true" ]; then
+              echo "Release exists but force=true. Proceeding."
+              echo "should_run=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "Release ${{ steps.prep.outputs.release_tag }} already exists. Skipping build."
+              echo "should_run=false" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "should_run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # ==========================================
+  # JOB 4: Build + Release
+  # ==========================================
+  # Produces the installable ZIP and attaches it to a GitHub release.
+  # The ZIP layout for a publisher upload:
+  #   <slug>/
+  #     mustuse-apps-pub.php   (main plugin file)
+  #     src/                   (PSR-4 PHP classes)
+  #     views/                 (admin-side templates)
+  #     dist/                  (compiled JS + CSS from Vite)
+  #     vendor/                (composer --no-dev install)
+  #     assets/blueprints/     (Laravel shell blueprint copied on Ship It!)
+  #     uninstall.php          (WP_UNINSTALL_PLUGIN cleanup)
+  #     README.md              (project README, informational)
+  build_and_release:
+    name: Build and Release
+    needs: [test, preflight]
+    if: github.event_name != 'pull_request' && needs.preflight.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      PLUGIN_SLUG:    "${{ vars.PLUGIN_SLUG }}"
+      MAIN_FILE_PATH: "${{ vars.MAIN_FILE_PATH }}"
+      PHP_VERSION:    "${{ vars.PHP_VERSION || '8.3' }}"
+      NODE_VERSION:   "${{ vars.NODE_VERSION || '20' }}"
+
+    steps:
+      - name: Verify required repo variables
+        run: |
+          if [ -z "${{ env.PLUGIN_SLUG }}" ] || [ -z "${{ env.MAIN_FILE_PATH }}" ]; then
+            echo "::error::PLUGIN_SLUG and MAIN_FILE_PATH must be configured as GitHub repo variables."
+            echo "::error::Settings → Secrets and variables → Actions → Variables tab."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup PHP ${{ env.PHP_VERSION }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Composer install (prod only)
+        run: composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+
+      - name: npm ci
+        run: npm ci
+
+      - name: Build front-end assets
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          set -e
+          for required in dist/.vite/manifest.json dist/js/editorial.js dist/css/editorial-style.css vendor/autoload.php; do
+            if [ ! -f "$required" ]; then
+              echo "::error::Required build artifact missing: $required"
+              exit 1
+            fi
+          done
+
+      - name: Bundle Variants
+        id: bundle
+        run: |
+          set -e
+
+          VARIANTS_RAW="${{ inputs.variants || 'full' }}"
+          IFS=',' read -r -a VARIANTS <<< "$VARIANTS_RAW"
+
+          STAGING_DIR="staging"
+          UPDATES_FILE="updates.json"
+
+          echo '{"version":"'"${{ needs.preflight.outputs.version }}"'","slug":"'"${{ env.PLUGIN_SLUG }}"'","packages":[]}' > "${UPDATES_FILE}"
+
+          for RAW_V in "${VARIANTS[@]}"; do
+            VARIANT=$(echo "$RAW_V" | xargs)
+            [ -z "$VARIANT" ] && continue
+
+            echo "Building Variant: $VARIANT"
+
+            DEST="${STAGING_DIR}/${{ env.PLUGIN_SLUG }}"
+            rm -rf "${STAGING_DIR}"
+            mkdir -p "${DEST}"
+
+            rsync -av --checksum . "${DEST}/" --exclude-from=".distignore"
+
+            if [ -f ".github/variants/${VARIANT}.txt" ]; then
+              while read -r EXCLUDE_PATH; do
+                [ -n "$EXCLUDE_PATH" ] && rm -rf "${DEST}/$EXCLUDE_PATH"
+              done < ".github/variants/${VARIANT}.txt"
+            fi
+
+            # Sanity-check the staged tree has the essentials before zipping.
+            for required in "${DEST}/${{ env.MAIN_FILE_PATH }}" "${DEST}/src" "${DEST}/dist" "${DEST}/vendor/autoload.php" "${DEST}/assets/blueprints/mobile-shell/composer.json"; do
+              if [ ! -e "$required" ]; then
+                echo "::error::Staged tree missing required entry: $required"
+                exit 1
+              fi
+            done
+
+            ZIP_NAME="${{ env.PLUGIN_SLUG }}-${VARIANT}.zip"
+            [ "$VARIANT" == "full" ] && ZIP_NAME="${{ env.PLUGIN_SLUG }}.zip"
+
+            cd "${STAGING_DIR}"
+            zip -rq "../${ZIP_NAME}" "${{ env.PLUGIN_SLUG }}"
+            cd ..
+
+            CHECKSUM=$(sha256sum "$ZIP_NAME" | awk '{print $1}')
+            SIZE=$(stat -c %s "$ZIP_NAME")
+            DL_URL="https://github.com/${{ github.repository }}/releases/download/${{ needs.preflight.outputs.release_tag }}/${ZIP_NAME}"
+
+            jq --arg v "$VARIANT" --arg url "$DL_URL" --arg sha "$CHECKSUM" --argjson sz "$SIZE" \
+              '.packages += [{"variant": $v, "package": $url, "checksum": $sha, "size": $sz}]' \
+              "$UPDATES_FILE" > "${UPDATES_FILE}.tmp" && mv "${UPDATES_FILE}.tmp" "${UPDATES_FILE}"
+          done
+
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.preflight.outputs.release_tag }}
+          name: ${{ needs.preflight.outputs.release_name }}
+          prerelease: ${{ needs.preflight.outputs.is_prerelease == 'true' }}
+          makeLatest: ${{ needs.preflight.outputs.make_latest == 'true' }}
+          commit: ${{ github.sha }}
+          artifacts: "*.zip, updates.json"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          generateReleaseNotes: true

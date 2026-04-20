@@ -1,0 +1,51 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/category-pills",
+    "title": "Category Pills",
+    "category": "mustuse-apps-pub",
+    "description": "Horizontal scrollable pills that link to category pages. Great at the top of a home screen.",
+    "icon": "tag",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "taxonomy",
+                "type": "select",
+                "label": "Taxonomy",
+                "default": "category",
+                "options": [
+                    { "label": "Category", "value": "category" },
+                    { "label": "Tag", "value": "post_tag" }
+                ]
+            },
+            {
+                "id": "categoryIds",
+                "type": "text",
+                "label": "Category IDs (comma-separated)",
+                "default": "",
+                "help": "Leave blank to auto-populate from the most popular terms."
+            },
+            {
+                "id": "autoFromPopular",
+                "type": "toggle",
+                "label": "Auto-populate from popular terms",
+                "default": true
+            },
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Count (auto mode)",
+                "default": 8
+            },
+            {
+                "id": "activeSlug",
+                "type": "text",
+                "label": "Active term slug",
+                "default": "",
+                "help": "Optional — highlights a pill when present."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-title",
+    "title": "Post Title",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's title. Use inside a detail screen (/article/{slug}) or a query-loop's post-template.",
+    "icon": "heading",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "level",
+                "type": "select",
+                "label": "Heading Level",
+                "default": "h1",
+                "options": [
+                    { "label": "H1 (most prominent)", "value": "h1" },
+                    { "label": "H2", "value": "h2" },
+                    { "label": "H3", "value": "h3" }
+                ]
+            },
+            {
+                "id": "linkToPost",
+                "type": "toggle",
+                "label": "Link to Post",
+                "default": false,
+                "help": "Enable when used inside a loop card; usually off on detail screens."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

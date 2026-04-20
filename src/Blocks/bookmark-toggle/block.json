@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/bookmark-toggle",
+    "title": "Bookmark Toggle",
+    "category": "mustuse-apps-pub",
+    "description": "Save/unsave button for the current post. Requires a post context (lives on detail screens or inside query-loop post-templates).",
+    "icon": "star-filled",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "addLabel",
+                "type": "text",
+                "label": "Add Label",
+                "default": "Bookmark"
+            },
+            {
+                "id": "removeLabel",
+                "type": "text",
+                "label": "Bookmarked Label",
+                "default": "Bookmarked"
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

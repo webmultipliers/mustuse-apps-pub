@@ -1,0 +1,16 @@
+.mua-query-loop {
+    display: grid;
+    gap: var(--mua-space-md);
+    margin-bottom: var(--mua-space-lg);
+
+    &--grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    &__empty,
+    &__loading {
+        color: var(--mua-color-muted);
+        text-align: center;
+        padding: var(--mua-space-lg);
+    }
+}

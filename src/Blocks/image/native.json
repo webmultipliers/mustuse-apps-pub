@@ -1,0 +1,21 @@
+{
+    "type": "stack",
+    "direction": "vertical",
+    "spacing": 8,
+    "children": [
+        {
+            "type": "image",
+            "src": "{{ attributes.image.url }}",
+            "aspect_ratio": "16:9",
+            "fit": "cover",
+            "caption": "{{ attributes.caption }}",
+            "alt": "{{ attributes.alt }}"
+        },
+        {
+            "visible_when": "{{ attributes.caption }}",
+            "type": "text",
+            "content": "{{ attributes.caption }}",
+            "style": "caption"
+        }
+    ]
+}

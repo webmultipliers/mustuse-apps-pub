@@ -1,0 +1,15 @@
+{
+    "type": "stack",
+    "direction": "vertical",
+    "spacing": 8,
+    "children": [
+        {
+            "type": "text",
+            "content": "{{ attributes.text }}",
+            "style": "{{ attributes.level }}"
+        },
+        {
+            "type": "divider"
+        }
+    ]
+}

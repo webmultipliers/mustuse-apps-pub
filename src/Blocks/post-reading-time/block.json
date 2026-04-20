@@ -1,0 +1,25 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-reading-time",
+    "title": "Post Reading Time",
+    "category": "mustuse-apps-pub",
+    "description": "Estimated reading time for the current context post, in minutes.",
+    "icon": "clock",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "format",
+                "type": "select",
+                "label": "Format",
+                "default": "short",
+                "options": [
+                    { "label": "Short (\"5 min read\")",  "value": "short" },
+                    { "label": "Long (\"5-minute read\")", "value": "long" }
+                ]
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,13 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Action callback returns false but should not return anything\.$#'
+			identifier: return.void
+			count: 6
+			path: tests/php/Integration/MuaIntegrationTestCase.php
+
+		-
+			message: '#^Function tests_add_filter not found\.$#'
+			identifier: function.notFound
+			count: 1
+			path: tests/php/Integration/bootstrap.php

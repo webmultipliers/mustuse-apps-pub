@@ -1,0 +1,35 @@
+.mua-search {
+    display: flex;
+    gap: var(--mua-space-sm);
+    align-items: stretch;
+    margin: 0 0 var(--mua-space-md);
+
+    &__input {
+        flex: 1 1 auto;
+        padding: 10px 14px;
+        font-size: 16px;            /* iOS zoom-on-focus guard: ≥16px */
+        border: 1px solid var(--mua-color-border);
+        border-radius: var(--mua-radius-md);
+        background: var(--mua-color-surface);
+        color: var(--mua-color-text);
+
+        &:focus {
+            outline: none;
+            border-color: var(--mua-color-accent);
+        }
+    }
+
+    &__submit {
+        padding: 10px 18px;
+        background: var(--mua-color-accent);
+        color: #fff;
+        border: 0;
+        border-radius: var(--mua-radius-md);
+        font-weight: 600;
+        cursor: pointer;
+
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}

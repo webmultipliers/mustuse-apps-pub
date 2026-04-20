@@ -1,0 +1,7 @@
+{
+    "type": "section",
+    "heading": "{{ attributes.heading }}",
+    "see_all_label": "{{ attributes.seeAllLabel }}",
+    "see_all_target": { "type": "path", "value": "{{ attributes.seeAllUrl }}" },
+    "children": "{{ innerBlocks }}"
+}

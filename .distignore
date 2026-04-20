@@ -1,0 +1,68 @@
+# .distignore — rsync exclude list consumed by .github/workflows/release.yml
+#
+# Patterns follow rsync --exclude-from semantics:
+#   - Lines starting with `/` are anchored to the repo root
+#   - Lines without `/` match at any depth
+#   - Trailing `/` is NOT required to match directories
+#
+# CRITICAL: root-only excludes MUST be anchored with `/`. The Laravel shell
+# blueprint at assets/blueprints/mobile-shell/ has its own composer.json,
+# package.json, vite.config.js — excluding those unanchored would break
+# Ship It! because the shell repo would be missing its build manifests.
+
+# --- Version control + GitHub ------------------------------------------------
+/.git
+/.gitignore
+/.gitattributes
+/.github
+
+# --- Editor / IDE / OS turds (safe at any depth) -----------------------------
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# --- Dev docs not needed in the plugin install -------------------------------
+/AGENTS.md
+/todo.md
+/plugins.todo.md
+/native-php-v3-docs
+
+# --- Node build tooling (root only; blueprint keeps its own copies) ---------
+/package.json
+/package-lock.json
+/tsconfig.json
+/vite.config.js
+/vitest.config.ts
+/node_modules
+
+# --- PHP dev tooling (root only) --------------------------------------------
+/composer.json
+/composer.lock
+/phpstan.neon.dist
+/phpstan-baseline.neon
+/phpstan-bootstrap.php
+/phpunit.xml.dist
+/phpunit-integration.xml.dist
+/.php-cs-fixer.dist.php
+/.phpcs.cache
+/.phpunit.cache
+/tools
+
+# --- Tests ------------------------------------------------------------------
+/tests
+
+# --- Local dev config -------------------------------------------------------
+/.wp-env.json
+/.distignore
+
+# --- Build artifacts (must not recurse into themselves) ---------------------
+# `updates.json` is emitted as a sibling release asset, NOT inside the ZIP.
+# `staging/` is the rsync target itself; without this exclude, rsync would
+# copy the (empty) staging dir into staging/<slug>/staging and the result
+# would ship a recursive shell of itself.
+/staging
+/updates.json

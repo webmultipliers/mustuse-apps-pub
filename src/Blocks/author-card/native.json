@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Renders the current context author. On /author/{slug} screens reads context.author; on article detail screens falls back to context.post.author.",
+    "consumes_context": "author"
+}

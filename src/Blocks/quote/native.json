@@ -1,0 +1,5 @@
+{
+    "type": "quote",
+    "text": "{{ attributes.text }}",
+    "cite": "{{ attributes.cite }}"
+}

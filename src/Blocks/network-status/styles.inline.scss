@@ -1,0 +1,42 @@
+.mua-network-status {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: var(--mua-space-md) var(--mua-space-lg);
+    border-radius: var(--mua-radius-md);
+    background: var(--mua-color-surface);
+    margin: var(--mua-space-md) 0;
+
+    &__dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-top: 6px;
+        flex: 0 0 auto;
+    }
+
+    &--online  &__dot { background: #2bb673; box-shadow: 0 0 0 4px rgba(43,182,115,.18); }
+    &--offline &__dot { background: #b62b2b; box-shadow: 0 0 0 4px rgba(182,43,43,.18); }
+
+    &__title {
+        margin: 0 0 2px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--mua-color-muted);
+    }
+
+    &__line { margin: 0; }
+
+    &__flags { margin-left: 6px; }
+
+    &__flag {
+        display: inline-block;
+        padding: 2px 6px;
+        margin-right: 4px;
+        border-radius: 999px;
+        background: var(--mua-color-surface-alt, rgba(0,0,0,.06));
+        font-size: 11px;
+    }
+}

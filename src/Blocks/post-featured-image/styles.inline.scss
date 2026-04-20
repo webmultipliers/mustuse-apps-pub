@@ -1,0 +1,15 @@
+.mua-post-featured-image {
+    margin: calc(var(--mua-space-md) * -1) calc(var(--mua-space-md) * -1) var(--mua-space-md);
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    &--16x9   img { aspect-ratio: 16 / 9; }
+    &--4x3    img { aspect-ratio: 4 / 3; }
+    &--1x1    img { aspect-ratio: 1 / 1; }
+    &--natural img { aspect-ratio: auto; }
+}

@@ -1,0 +1,23 @@
+.mua-text {
+    font-family: var(--mua-font-serif);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--mua-color-text);
+    margin-bottom: var(--mua-space-md);
+
+    p { margin: 0 0 var(--mua-space-md); }
+    h2, h3, h4 { font-family: var(--mua-font-family); }
+    ul, ol { padding-left: 22px; }
+
+    blockquote {
+        border-left: 3px solid var(--mua-color-accent);
+        padding-left: var(--mua-space-md);
+        margin: var(--mua-space-md) 0;
+        color: var(--mua-color-muted);
+        font-style: italic;
+    }
+
+    &--left   { text-align: left; }
+    &--center { text-align: center; }
+    &--right  { text-align: right; }
+}

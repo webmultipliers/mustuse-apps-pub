@@ -1,0 +1,25 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-date",
+    "title": "Post Date",
+    "category": "mustuse-apps-pub",
+    "description": "Published date of the current context post. Human-readable (\"2 days ago\") by default.",
+    "icon": "calendar-alt",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "format",
+                "type": "select",
+                "label": "Display Format",
+                "default": "human",
+                "options": [
+                    { "label": "Relative (\"2 days ago\")", "value": "human" },
+                    { "label": "Absolute (\"Apr 17, 2026\")", "value": "absolute" }
+                ]
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

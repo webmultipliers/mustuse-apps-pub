@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "description": "Renders a nested comment thread for the current route's post. Context-bound: reads post.id from the resolved detail route.",
+    "consumes_context": [ "post" ],
+    "dataSource": {
+        "kind": "comments",
+        "endpoint": "comments",
+        "method": "GET",
+        "path_params": {
+            "post_id": "{{ context.post.id }}"
+        },
+        "bind": "items",
+        "ttl": 120,
+        "swr": true
+    }
+}

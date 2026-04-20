@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "description": "Fetches per-device reading history. Keyed on X-MUA-Device-Id header; each item carries the same post context shape as /content so post-title / featured-image render inline.",
+    "dataSource": {
+        "kind": "history",
+        "endpoint": "history",
+        "method": "GET",
+        "params": {},
+        "bind": "items",
+        "ttl": 60,
+        "swr": true
+    }
+}

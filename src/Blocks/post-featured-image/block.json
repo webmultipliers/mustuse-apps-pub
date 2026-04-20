@@ -1,0 +1,33 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-featured-image",
+    "title": "Post Featured Image",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's featured image.",
+    "icon": "format-image",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "aspectRatio",
+                "type": "select",
+                "label": "Aspect Ratio",
+                "default": "16:9",
+                "options": [
+                    { "label": "16:9",    "value": "16:9" },
+                    { "label": "4:3",     "value": "4:3" },
+                    { "label": "Square",  "value": "1:1" },
+                    { "label": "Natural", "value": "natural" }
+                ]
+            },
+            {
+                "id": "linkToPost",
+                "type": "toggle",
+                "label": "Link to Post",
+                "default": false
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

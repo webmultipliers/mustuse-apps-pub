@@ -1,0 +1,33 @@
+.mua-article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--mua-space-md);
+    margin-bottom: var(--mua-space-lg);
+
+    &__item {
+        display: grid;
+        gap: 6px;
+
+        a { color: inherit; }
+    }
+
+    &__thumb {
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        border-radius: var(--mua-radius-sm);
+        width: 100%;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: var(--mua-line-tight);
+    }
+
+    &__excerpt {
+        margin: 0;
+        font-size: 13px;
+        color: var(--mua-color-muted);
+    }
+}

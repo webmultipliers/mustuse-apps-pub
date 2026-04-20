@@ -1,0 +1,36 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/video",
+    "title": "Video",
+    "category": "mustuse-apps-pub",
+    "description": "Inline video player with poster image.",
+    "icon": "video-alt3",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "videoUrl",
+                "type": "text",
+                "label": "Video URL",
+                "default": "",
+                "help": "Direct video URL or embeddable URL (YouTube, Vimeo)."
+            },
+            {
+                "id": "posterImage",
+                "type": "image",
+                "label": "Poster Image"
+            },
+            {
+                "id": "caption",
+                "type": "text",
+                "label": "Caption",
+                "default": ""
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

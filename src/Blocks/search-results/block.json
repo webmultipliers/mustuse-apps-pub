@@ -1,0 +1,43 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/search-results",
+    "title": "Search Results",
+    "category": "mustuse-apps-pub",
+    "description": "Renders articles matching the current route's search query. Lives on a `search-results` detail screen.",
+    "icon": "search",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "postType",
+                "type": "select",
+                "label": "Post Type",
+                "default": "post",
+                "options": [
+                    { "label": "Post", "value": "post" },
+                    { "label": "Page", "value": "page" }
+                ]
+            },
+            {
+                "id": "perPage",
+                "type": "number",
+                "label": "Results per Page",
+                "default": 20
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            },
+            {
+                "id": "showExcerpt",
+                "type": "toggle",
+                "label": "Show Excerpt",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

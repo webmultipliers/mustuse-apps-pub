@@ -1,0 +1,14 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-excerpt",
+    "title": "Post Excerpt",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's excerpt (plain text).",
+    "icon": "editor-quote",
+    "blockstudio": {
+        "attributes": [],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

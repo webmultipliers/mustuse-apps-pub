@@ -1,0 +1,21 @@
+.mua-section {
+    margin-bottom: var(--mua-space-lg);
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: var(--mua-space-md);
+    }
+
+    &__heading {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    &__link {
+        font-size: 14px;
+        font-weight: 600;
+    }
+}

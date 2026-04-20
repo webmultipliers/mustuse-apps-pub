@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "description": "Horizontal list of taxonomy terms (categories, tags, custom taxonomies). Fetched live from the /terms endpoint. TTL is long because term metadata moves rarely; pull-to-refresh invalidates immediately.",
+    "dataSource": {
+        "kind": "terms",
+        "endpoint": "terms",
+        "method": "GET",
+        "params": {
+            "taxonomy": "{{ attributes.taxonomy }}",
+            "per_page": "{{ attributes.count }}",
+            "include": "{{ attributes.categoryIds }}"
+        },
+        "bind": "items",
+        "ttl": 1800,
+        "swr": true
+    }
+}

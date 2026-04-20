@@ -1,0 +1,15 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub-canvas/capability-status",
+    "title": "Capability Status",
+    "category": "mustuse-apps-pub-canvas",
+    "description": "Shows which capabilities the connected shells have advertised vs. what the manifest requires.",
+    "icon": "yes-alt",
+    "supports": {
+        "html": false,
+        "multiple": false,
+        "reusable": false
+    },
+    "attributes": {}
+}

@@ -1,0 +1,48 @@
+.mua-related-articles {
+    margin: var(--mua-space-lg) 0;
+
+    &__heading {
+        margin: 0 0 var(--mua-space-md);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--mua-color-muted);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+    }
+
+    &__items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: var(--mua-space-md);
+    }
+
+    &__link {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: var(--mua-space-md);
+        align-items: start;
+        color: inherit;
+        &:hover { text-decoration: none; }
+    }
+
+    &__thumb {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: var(--mua-radius-sm);
+    }
+
+    &__title {
+        font-size: 15px;
+        font-weight: 600;
+        line-height: var(--mua-line-tight);
+    }
+
+    &__excerpt {
+        margin: 4px 0 0;
+        font-size: 13px;
+        color: var(--mua-color-muted);
+    }
+}

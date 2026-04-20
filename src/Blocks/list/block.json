@@ -1,0 +1,32 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/list",
+    "title": "List",
+    "category": "mustuse-apps-pub",
+    "description": "Bulleted or numbered list.",
+    "icon": "list-ul",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "style",
+                "type": "select",
+                "label": "Style",
+                "default": "bullet",
+                "options": [
+                    { "label": "Bullet", "value": "bullet" },
+                    { "label": "Numbered", "value": "numbered" }
+                ]
+            },
+            {
+                "id": "items",
+                "type": "textarea",
+                "label": "Items (one per line)",
+                "default": "",
+                "help": "Each line becomes a list item."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

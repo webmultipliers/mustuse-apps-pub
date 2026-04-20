@@ -1,0 +1,18 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-template",
+    "title": "Post Template",
+    "category": "mustuse-apps-pub",
+    "description": "The per-item template inside a Query Loop. Whatever you drop inside gets repeated once per post, with context.post bound to the current iteration. WP core parallel: core/post-template.",
+    "icon": "text-page",
+    "parent": [
+        "mustuse-apps-pub/query-loop"
+    ],
+    "blockstudio": {
+        "attributes": [],
+        "innerBlocks": true,
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

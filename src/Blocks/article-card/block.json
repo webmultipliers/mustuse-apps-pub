@@ -1,0 +1,43 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/article-card",
+    "title": "Article Card",
+    "category": "mustuse-apps-pub",
+    "description": "Single featured article card with title, excerpt, and thumbnail. Links to the article detail screen.",
+    "icon": "admin-post",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "postId",
+                "type": "post",
+                "label": "Article",
+                "post_type": "post",
+                "help": "Select the article to feature."
+            },
+            {
+                "id": "showExcerpt",
+                "type": "toggle",
+                "label": "Show Excerpt",
+                "default": true
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            },
+            {
+                "id": "excerptLength",
+                "type": "number",
+                "label": "Excerpt Word Limit",
+                "default": 20
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "banner",
+    "style": "alert",
+    "label": "{{ attributes.label }}",
+    "headline": "{{ attributes.headline }}",
+    "action": {
+        "type": "navigate",
+        "target": { "type": "path", "value": "{{ attributes.linkUrl }}" }
+    }
+}

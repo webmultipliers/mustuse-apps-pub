@@ -1,0 +1,72 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/hero",
+    "title": "Hero",
+    "category": "mustuse-apps-pub",
+    "description": "Large header with image, title, and optional CTA. Primary visual anchor for screens.",
+    "icon": "cover-image",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "heading",
+                "type": "text",
+                "label": "Heading",
+                "default": ""
+            },
+            {
+                "id": "subheading",
+                "type": "textarea",
+                "label": "Subheading",
+                "default": ""
+            },
+            {
+                "id": "imageUrl",
+                "type": "image",
+                "label": "Background Image"
+            },
+            {
+                "id": "ctaLabel",
+                "type": "text",
+                "label": "CTA Label",
+                "default": ""
+            },
+            {
+                "id": "ctaTargetType",
+                "type": "select",
+                "label": "CTA Target Type",
+                "default": "none",
+                "options": [
+                    {
+                        "label": "None",
+                        "value": "none"
+                    },
+                    {
+                        "label": "URL",
+                        "value": "url"
+                    },
+                    {
+                        "label": "Screen",
+                        "value": "screen"
+                    },
+                    {
+                        "label": "Deep Link",
+                        "value": "deeplink"
+                    }
+                ]
+            },
+            {
+                "id": "ctaTargetValue",
+                "type": "text",
+                "label": "CTA Target",
+                "default": "",
+                "help": "URL, screen slug, or deep-link path depending on target type."
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

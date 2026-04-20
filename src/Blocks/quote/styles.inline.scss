@@ -1,0 +1,23 @@
+.mua-quote {
+    margin: var(--mua-space-lg) 0;
+    padding: var(--mua-space-md) var(--mua-space-lg);
+    border-left: 4px solid var(--mua-color-accent);
+    background: var(--mua-color-surface);
+    border-radius: var(--mua-radius-sm);
+
+    &__text {
+        margin: 0;
+        font-family: var(--mua-font-serif);
+        font-size: 19px;
+        line-height: 1.5;
+        color: var(--mua-color-text);
+    }
+
+    &__cite {
+        display: block;
+        margin-top: var(--mua-space-sm);
+        font-size: 13px;
+        color: var(--mua-color-muted);
+        font-style: normal;
+    }
+}

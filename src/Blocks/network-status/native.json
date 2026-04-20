@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Live connectivity indicator. The shell reads Network::status() on mount and re-renders via #[OnNative(NetworkChanged)]. No user action.",
+    "required_capability": "network"
+}

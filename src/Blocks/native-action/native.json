@@ -1,0 +1,27 @@
+{
+    "type": "stack",
+    "direction": "vertical",
+    "spacing": 12,
+    "children": [
+        {
+            "type": "button",
+            "label": "{{ attributes.label }}",
+            "style": "primary",
+            "action": {
+                "type": "capability",
+                "capability": "{{ attributes.capability }}",
+                "callback": {
+                    "type": "{{ attributes.callbackType }}",
+                    "slot": "{{ attributes.callbackSlot }}",
+                    "url": "{{ attributes.callbackUrl }}"
+                }
+            }
+        },
+        {
+            "visible_when": "{{ attributes.fallbackText }}",
+            "type": "text",
+            "content": "{{ attributes.fallbackText }}",
+            "style": "caption"
+        }
+    ]
+}

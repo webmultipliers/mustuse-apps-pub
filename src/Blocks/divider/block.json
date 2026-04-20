@@ -1,0 +1,14 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/divider",
+    "title": "Divider",
+    "category": "mustuse-apps-pub",
+    "description": "Horizontal line to separate content sections.",
+    "icon": "minus",
+    "blockstudio": {
+        "attributes": [],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

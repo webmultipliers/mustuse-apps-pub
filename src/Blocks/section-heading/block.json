@@ -1,0 +1,44 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/section-heading",
+    "title": "Section Heading",
+    "category": "mustuse-apps-pub",
+    "description": "Visual divider with heading text. Separates content sections on a screen.",
+    "icon": "heading",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "text",
+                "type": "text",
+                "label": "Heading Text",
+                "default": ""
+            },
+            {
+                "id": "level",
+                "type": "select",
+                "label": "Heading Level",
+                "default": "h2",
+                "options": [
+                    {
+                        "label": "H2",
+                        "value": "h2"
+                    },
+                    {
+                        "label": "H3",
+                        "value": "h3"
+                    },
+                    {
+                        "label": "H4",
+                        "value": "h4"
+                    }
+                ]
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

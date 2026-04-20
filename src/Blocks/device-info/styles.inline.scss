@@ -1,0 +1,27 @@
+.mua-device-info {
+    padding: var(--mua-space-lg);
+    border-radius: var(--mua-radius-md);
+    background: var(--mua-color-surface);
+    margin: var(--mua-space-md) 0;
+
+    &__title {
+        margin: 0 0 var(--mua-space-sm);
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--mua-color-muted);
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 6px 14px;
+        margin: 0;
+
+        dt { font-weight: 600; color: var(--mua-color-muted); }
+        dd { margin: 0; }
+    }
+
+    &__charging { margin-left: 4px; }
+}

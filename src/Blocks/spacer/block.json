@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/spacer",
+    "title": "Spacer",
+    "category": "mustuse-apps-pub",
+    "description": "Vertical gap between blocks.",
+    "icon": "editor-break",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "size",
+                "type": "select",
+                "label": "Size",
+                "default": "md",
+                "options": [
+                    { "label": "Small", "value": "sm" },
+                    { "label": "Medium", "value": "md" },
+                    { "label": "Large", "value": "lg" },
+                    { "label": "Extra Large", "value": "xl" }
+                ]
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "strict": true,
+        "noEmit": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@shared/*": [
+                "/assets/shared/*"
+            ],
+            "@editorial/*": [
+                "/assets/editorial/*"
+            ],
+            "@developer/*": [
+                "/assets/developer/*"
+            ]
+        }
+    },
+    "include": [
+        "assets/**/*.ts"
+    ]
+}

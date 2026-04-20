@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "description": "Single featured article. `postId` attribute drives an `id=` lookup on /content; the response puts the article in items[0].",
+    "dataSource": {
+        "kind": "posts",
+        "endpoint": "content",
+        "method": "GET",
+        "params": {
+            "id": "{{ attributes.postId }}"
+        },
+        "bind": "items",
+        "ttl": 600,
+        "swr": true
+    }
+}

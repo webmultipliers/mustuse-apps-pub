@@ -1,0 +1,35 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/text",
+    "title": "Text",
+    "category": "mustuse-apps-pub",
+    "description": "Rich-text content block for editorial prose.",
+    "icon": "editor-paragraph",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "content",
+                "type": "richtext",
+                "label": "Content",
+                "default": ""
+            },
+            {
+                "id": "align",
+                "type": "select",
+                "label": "Alignment",
+                "default": "left",
+                "options": [
+                    { "label": "Left", "value": "left" },
+                    { "label": "Center", "value": "center" },
+                    { "label": "Right", "value": "right" }
+                ]
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

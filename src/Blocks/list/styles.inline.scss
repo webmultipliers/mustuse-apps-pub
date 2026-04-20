@@ -1,0 +1,9 @@
+.mua-list {
+    padding-left: 22px;
+    margin: 0 0 var(--mua-space-md);
+
+    &--bullet   { list-style: disc; }
+    &--numbered { list-style: decimal; }
+
+    li { margin-bottom: 6px; }
+}

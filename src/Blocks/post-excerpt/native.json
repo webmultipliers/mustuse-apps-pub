@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Plain-text post excerpt.",
+    "consumes_context": "post",
+    "field": "excerpt"
+}

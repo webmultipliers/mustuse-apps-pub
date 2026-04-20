@@ -1,0 +1,56 @@
+{
+    "type": "stack",
+    "direction": "vertical",
+    "spacing": 0,
+    "children": [
+        {
+            "type": "container",
+            "padding": { "top": 32, "bottom": 32, "left": 24, "right": 24 },
+            "children": [
+                {
+                    "type": "stack",
+                    "direction": "vertical",
+                    "spacing": 16,
+                    "align": "center",
+                    "children": [
+                        {
+                            "type": "icon",
+                            "name": "lock",
+                            "size": 32,
+                            "color": "#646970"
+                        },
+                        {
+                            "visible_when": "{{ attributes.gateHeading }}",
+                            "type": "text",
+                            "content": "{{ attributes.gateHeading }}",
+                            "style": "heading_3"
+                        },
+                        {
+                            "visible_when": "{{ attributes.gateDescription }}",
+                            "type": "text",
+                            "content": "{{ attributes.gateDescription }}",
+                            "style": "body"
+                        },
+                        {
+                            "type": "button",
+                            "label": "{{ attributes.ctaLabel }}",
+                            "style": "primary",
+                            "action": {
+                                "type": "capability",
+                                "capability": "biometrics",
+                                "callback": {
+                                    "type": "state",
+                                    "slot": "_auth_gate_unlocked"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "visible_when": "{{ state._auth_gate_unlocked }}",
+            "type": "inner_blocks"
+        }
+    ]
+}

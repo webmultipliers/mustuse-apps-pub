@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Full post body (HTML). Reads context.post.content.",
+    "consumes_context": "post",
+    "field": "content"
+}

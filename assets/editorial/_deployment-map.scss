@@ -1,0 +1,180 @@
+// Deployment Map — 5-node interactive pipeline visualisation.
+// Uses design tokens from shared/_tokens.scss where available; local
+// overrides are scoped under .mua-dep-* to avoid token pollution.
+
+@keyframes mua-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    50%      { box-shadow: 0 0 0 8px rgba(40, 167, 69, 0); }
+}
+
+@keyframes mua-breathe {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+}
+
+@keyframes mua-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-3px); }
+    40%, 80% { transform: translateX(3px); }
+}
+
+// ── Layout ────────────────────────────────────────────────────────
+.mua-dep-map {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: var(--mua-space-md) 0;
+    overflow-x: auto;
+}
+
+// ── Connector lines between nodes ─────────────────────────────────
+.mua-dep-map__connector {
+    flex: 1 0 24px;
+    height: 3px;
+    min-width: 24px;
+    background: #d4d4d4;
+    border-radius: 2px;
+    transition: background 0.4s ease;
+
+    &--complete { background: #28a745; }
+    &--active   { background: linear-gradient(90deg, #28a745 40%, #d4d4d4 100%); }
+    &--failed   { background: #dc3232; }
+    &--waiting  { background: #f0ad4e; }
+}
+
+// ── Node ──────────────────────────────────────────────────────────
+.mua-dep-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--mua-space-sm) var(--mua-space-md);
+    min-width: 80px;
+    border: 2px solid #d4d4d4;
+    border-radius: 8px;
+    background: #fafafa;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    user-select: none;
+
+    &:focus-visible {
+        outline: 2px solid var(--mua-color-accent, #007cba);
+        outline-offset: 2px;
+    }
+
+    &__icon {
+        font-size: 24px;
+        line-height: 1;
+        color: #888;
+        transition: color 0.3s;
+    }
+
+    &__label {
+        font-size: 12px;
+        font-weight: 600;
+        text-align: center;
+        color: #333;
+    }
+
+    &__subtitle {
+        font-size: 10px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    &__badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 10px;
+        background: #e0e0e0;
+        color: #555;
+        line-height: 1.2;
+
+        &--ok {
+            background: #28a745;
+            color: #fff;
+        }
+    }
+
+    // ── State modifiers ──
+    &--idle {
+        border-color: #d4d4d4;
+        .mua-dep-node__icon { color: #bbb; }
+    }
+
+    &--complete {
+        border-color: #28a745;
+        background: #f0f9f4;
+        .mua-dep-node__icon { color: #28a745; }
+    }
+
+    &--active {
+        border-color: #28a745;
+        animation: mua-pulse 1.5s ease infinite;
+        .mua-dep-node__icon { color: #28a745; }
+    }
+
+    &--failed {
+        border-color: #dc3232;
+        background: #fef2f2;
+        animation: mua-shake 0.4s ease;
+        .mua-dep-node__icon { color: #dc3232; }
+    }
+
+    &--waiting {
+        border-color: #f0ad4e;
+        background: #fffdf0;
+        animation: mua-breathe 2s ease infinite;
+        .mua-dep-node__icon { color: #f0ad4e; }
+    }
+
+    // ── Requirements popup ──
+    &__popup {
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        min-width: 220px;
+        max-width: 300px;
+        padding: var(--mua-space-sm);
+        background: #fff;
+        border: 1px solid #d4d4d4;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        &[hidden] { display: none; }
+    }
+
+    &__checks {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__check {
+        padding: 4px 0;
+        font-size: 12px;
+        line-height: 1.4;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:last-child { border-bottom: none; }
+
+        &::before {
+            display: inline-block;
+            width: 16px;
+            margin-right: 4px;
+            text-align: center;
+        }
+
+        &--pass::before { content: '\2713'; color: #28a745; }
+        &--fail::before { content: '\2717'; color: #dc3232; }
+        &--info::before { content: '\2139'; color: #007cba; }
+    }
+}

@@ -1,0 +1,56 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# Build output — produced by CI on release, not committed.
+/dist/
+/_dist/
+
+# Release-build artifacts (written by .github/workflows/release.yml
+# when run locally). Ephemeral on CI, but keep them out of git.
+/staging/
+/updates.json
+/*.zip
+
+# PHPUnit
+/.phpunit.cache/
+/coverage/
+
+# PHPStan
+/phpstan-baseline.neon.tmp
+
+# PHP-CS-Fixer
+/.php-cs-fixer.cache
+/.phpcs.cache
+
+# WordPress wp-env
+/.wp-env/
+
+# IDE / editor
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+*.log
+
+# SFTP deploy
+.sftpignore
+
+# Shell
+nativephp
+
+# Local notes
+todo.md
+plugins.todo.md
+native-php-v3-docs
+CLAUDE.md

@@ -1,0 +1,48 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/trending",
+    "title": "Trending Articles",
+    "category": "mustuse-apps-pub",
+    "description": "Articles ordered by an engagement metric. Defaults to comment_count; `mua_content_query` lets extensions swap in views/shares/etc.",
+    "icon": "chart-line",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Number of Articles",
+                "default": 5
+            },
+            {
+                "id": "postType",
+                "type": "select",
+                "label": "Post Type",
+                "default": "post",
+                "options": [
+                    { "label": "Post", "value": "post" },
+                    { "label": "Page", "value": "page" }
+                ]
+            },
+            {
+                "id": "orderby",
+                "type": "select",
+                "label": "Trending Metric",
+                "default": "comment_count",
+                "options": [
+                    { "label": "Most Commented", "value": "comment_count" },
+                    { "label": "Most Recent", "value": "date" }
+                ],
+                "help": "Extensions can add custom metrics via the `mua_content_allowed_orderby` filter."
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,91 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/query-loop",
+    "title": "Query Loop",
+    "category": "mustuse-apps-pub",
+    "description": "Fetches posts once and repeats its inner template for every result. Design a card with post-title + post-featured-image + post-excerpt inside a post-template block, and the loop iterates it on device. WP-theme-style Query Loop, native to this namespace.",
+    "icon": "database-view",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "postType",
+                "type": "select",
+                "label": "Post Type",
+                "default": "post",
+                "options": [
+                    { "label": "Post", "value": "post" },
+                    { "label": "Page", "value": "page" }
+                ]
+            },
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Number of Items",
+                "default": 10
+            },
+            {
+                "id": "category",
+                "type": "number",
+                "label": "Category ID",
+                "default": 0,
+                "help": "0 = any category."
+            },
+            {
+                "id": "taxonomy",
+                "type": "text",
+                "label": "Taxonomy (for generic term filtering)",
+                "default": ""
+            },
+            {
+                "id": "term",
+                "type": "text",
+                "label": "Term (slug or id)",
+                "default": ""
+            },
+            {
+                "id": "author",
+                "type": "number",
+                "label": "Author User ID",
+                "default": 0
+            },
+            {
+                "id": "orderby",
+                "type": "select",
+                "label": "Order By",
+                "default": "date",
+                "options": [
+                    { "label": "Date",            "value": "date" },
+                    { "label": "Title",           "value": "title" },
+                    { "label": "Modified",        "value": "modified" },
+                    { "label": "Menu order",      "value": "menu_order" },
+                    { "label": "Comment count",   "value": "comment_count" },
+                    { "label": "Random",          "value": "rand" }
+                ]
+            },
+            {
+                "id": "order",
+                "type": "select",
+                "label": "Order",
+                "default": "DESC",
+                "options": [
+                    { "label": "Descending", "value": "DESC" },
+                    { "label": "Ascending",  "value": "ASC" }
+                ]
+            },
+            {
+                "id": "layout",
+                "type": "select",
+                "label": "Layout",
+                "default": "stack",
+                "options": [
+                    { "label": "Stack (vertical list)", "value": "stack" },
+                    { "label": "Grid (responsive)",     "value": "grid" }
+                ]
+            }
+        ],
+        "innerBlocks": true,
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Search input. Reads `context.search.query` (when on a search screen) so the current query sticks in the field after navigation; submitting navigates to /search?q={value}.",
+    "consumes_context": "search"
+}

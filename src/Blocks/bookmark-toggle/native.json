@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Bookmark button for context.post. Persists via POST/DELETE /apps/{slug}/bookmarks with X-MUA-Device-Id header. Local SecureStorage cache keeps state across launches.",
+    "consumes_context": "post"
+}

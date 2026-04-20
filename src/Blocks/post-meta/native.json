@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Single registered post_meta value by key.",
+    "consumes_context": "post",
+    "field": "meta"
+}

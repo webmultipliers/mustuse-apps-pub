@@ -1,0 +1,5 @@
+{
+    "version": 2,
+    "description": "Read-only device status panel. The shell reads Device::getInfo() / Device::getBatteryInfo() on mount and re-renders via #[OnNative(BatteryChanged)]. No user action.",
+    "required_capability": "device"
+}

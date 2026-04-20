@@ -1,0 +1,15 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub-canvas/branding-preview",
+    "title": "Branding Preview",
+    "category": "mustuse-apps-pub-canvas",
+    "description": "Previews the resolved branding (icon, splash, logo, palette) that ships in the manifest.",
+    "icon": "art",
+    "supports": {
+        "html": false,
+        "multiple": false,
+        "reusable": false
+    },
+    "attributes": {}
+}

@@ -1,0 +1,15 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub-canvas/manifest-preview",
+    "title": "Manifest Preview",
+    "category": "mustuse-apps-pub-canvas",
+    "description": "Renders the JSON manifest exactly as a shell will receive it.",
+    "icon": "media-code",
+    "supports": {
+        "html": false,
+        "multiple": false,
+        "reusable": false
+    },
+    "attributes": {}
+}

@@ -1,0 +1,32 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-author-avatar",
+    "title": "Post Author Avatar",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's author avatar.",
+    "icon": "businessperson",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "size",
+                "type": "select",
+                "label": "Size",
+                "default": "md",
+                "options": [
+                    { "label": "Small",  "value": "sm" },
+                    { "label": "Medium", "value": "md" },
+                    { "label": "Large",  "value": "lg" }
+                ]
+            },
+            {
+                "id": "linkToAuthor",
+                "type": "toggle",
+                "label": "Link to Author Archive",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

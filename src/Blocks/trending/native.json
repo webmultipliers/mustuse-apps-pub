@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "description": "Numbered list of articles ordered by `comment_count` (default) or publisher-provided metric.",
+    "dataSource": {
+        "kind": "posts",
+        "endpoint": "content",
+        "method": "GET",
+        "params": {
+            "post_type": "{{ attributes.postType }}",
+            "per_page":  "{{ attributes.count }}",
+            "orderby":   "{{ attributes.orderby }}",
+            "order":     "DESC"
+        },
+        "bind": "items",
+        "ttl": 300,
+        "swr": true
+    }
+}

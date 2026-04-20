@@ -1,0 +1,65 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/auth-gate",
+    "title": "Auth Gate",
+    "category": "mustuse-apps-pub",
+    "description": "Wraps children blocks behind biometric authentication. Content renders only after successful auth. Used for paywall, member-only, or premium gating.",
+    "icon": "lock",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "gateHeading",
+                "type": "text",
+                "label": "Gate Heading",
+                "default": "Authentication required"
+            },
+            {
+                "id": "gateDescription",
+                "type": "textarea",
+                "label": "Gate Description",
+                "default": "Verify your identity to access this content."
+            },
+            {
+                "id": "ctaLabel",
+                "type": "text",
+                "label": "Authenticate Button Label",
+                "default": "Unlock Content"
+            },
+            {
+                "id": "gateKind",
+                "type": "select",
+                "label": "Gate kind",
+                "default": "biometrics",
+                "options": [
+                    { "label": "Biometrics (Face ID / Touch ID)", "value": "biometrics" },
+                    { "label": "Logged in (any account)",         "value": "login" },
+                    { "label": "Required role",                   "value": "role" },
+                    { "label": "Required capability",             "value": "capability" }
+                ]
+            },
+            {
+                "id": "requiredRole",
+                "type": "text",
+                "label": "Required role",
+                "default": "",
+                "help": "WP role slug (e.g. subscriber, editor). Only checked when Gate kind = Required role."
+            },
+            {
+                "id": "requiredCapability",
+                "type": "text",
+                "label": "Required capability",
+                "default": "",
+                "help": "WP capability name (e.g. edit_posts, read_private_posts). Only checked when Gate kind = Required capability."
+            }
+        ],
+        "innerBlocks": true,
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": [
+            "biometrics"
+        ]
+    }
+}

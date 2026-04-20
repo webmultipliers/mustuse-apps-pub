@@ -1,0 +1,35 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/image",
+    "title": "Image",
+    "category": "mustuse-apps-pub",
+    "description": "Editorial image with optional caption.",
+    "icon": "format-image",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "image",
+                "type": "image",
+                "label": "Image"
+            },
+            {
+                "id": "caption",
+                "type": "text",
+                "label": "Caption",
+                "default": ""
+            },
+            {
+                "id": "alt",
+                "type": "text",
+                "label": "Alt Text",
+                "default": ""
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

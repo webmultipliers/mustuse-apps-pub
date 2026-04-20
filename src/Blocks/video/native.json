@@ -1,0 +1,18 @@
+{
+    "type": "stack",
+    "direction": "vertical",
+    "spacing": 8,
+    "children": [
+        {
+            "type": "video_player",
+            "src": "{{ attributes.videoUrl }}",
+            "poster": "{{ attributes.posterImage.url }}"
+        },
+        {
+            "visible_when": "{{ attributes.caption }}",
+            "type": "text",
+            "content": "{{ attributes.caption }}",
+            "style": "caption"
+        }
+    ]
+}

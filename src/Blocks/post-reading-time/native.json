@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Reading time in minutes (225 wpm).",
+    "consumes_context": "post",
+    "field": "reading_time_min"
+}

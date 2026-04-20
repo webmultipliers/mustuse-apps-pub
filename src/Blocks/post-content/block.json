@@ -1,0 +1,14 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-content",
+    "title": "Post Content",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's full content HTML. The pub already ran `the_content` filters server-side.",
+    "icon": "editor-paragraph",
+    "blockstudio": {
+        "attributes": [],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

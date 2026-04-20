@@ -1,0 +1,28 @@
+{
+    "name": "mustuse-apps-pub",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc --noEmit && vite build",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "wp-env": "wp-env",
+        "wp-env:start": "wp-env start",
+        "wp-env:stop": "wp-env stop",
+        "wp-env:clean": "wp-env clean all"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^6.0.5",
+        "@wordpress/env": "^10.0.0",
+        "jsdom": "^25.0.1",
+        "sass": "^1.77",
+        "typescript": "^5.4",
+        "vite": "^5.4",
+        "vitest": "^2.1.9"
+    },
+    "dependencies": {
+        "@types/sortablejs": "^1.15.9",
+        "sortablejs": "^1.15.7"
+    }
+}

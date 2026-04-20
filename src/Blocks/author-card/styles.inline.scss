@@ -1,0 +1,28 @@
+.mua-author-card {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: var(--mua-space-md);
+    padding: var(--mua-space-md);
+    background: var(--mua-color-surface);
+    border-radius: var(--mua-radius-md);
+    margin-bottom: var(--mua-space-md);
+
+    &__avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    &__name {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    &__bio {
+        margin: 4px 0 0;
+        font-size: 14px;
+        color: var(--mua-color-muted);
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/search",
+    "title": "Search",
+    "category": "mustuse-apps-pub",
+    "description": "Inline search input. On submit, navigates to /search?q={query} which the pub resolves to the search-results screen with the query in context.",
+    "icon": "search",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "placeholder",
+                "type": "text",
+                "label": "Placeholder",
+                "default": "Search articles…"
+            },
+            {
+                "id": "submitLabel",
+                "type": "text",
+                "label": "Submit Button Label",
+                "default": "Search"
+            },
+            {
+                "id": "autoFocus",
+                "type": "toggle",
+                "label": "Auto-focus on the search screen",
+                "default": false,
+                "help": "Enable only when the block is the primary input on a dedicated search screen."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

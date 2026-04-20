@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Author display name for current context post.",
+    "consumes_context": "post",
+    "field": "author.name"
+}

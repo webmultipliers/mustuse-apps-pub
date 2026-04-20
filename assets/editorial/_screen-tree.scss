@@ -1,0 +1,161 @@
+// Screens & Navigation metabox — drag-reorder + drag-nest tree.
+//
+// Server renders nested <ol class="mua-screen-tree__list">; SortableJS
+// hydrates each list. Visual cues for the drag state come from
+// SortableJS's default classes (`.sortable-ghost`, `.sortable-chosen`,
+// `.sortable-drag`) plus our own row chrome.
+
+.mua-screen-tree {
+    --row-pad: 8px;
+
+    &__toolbar {
+        display: flex;
+        align-items: center;
+        gap: var(--mua-space-sm);
+        margin-bottom: var(--mua-space-md);
+    }
+
+    &__hint {
+        color: #50575e;
+        font-size: 12px;
+    }
+
+    &__status {
+        margin-left: auto;
+        font-size: 12px;
+        color: #50575e;
+        min-height: 1em;
+    }
+
+    &__select {
+        display: inline-flex;
+        align-items: center;
+        margin-right: var(--mua-space-xs);
+    }
+
+    &--selecting {
+        .mua-screen-tree__handle {
+            opacity: 0.4;
+        }
+    }
+
+    &__empty {
+        color: #50575e;
+        font-style: italic;
+        margin: var(--mua-space-md) 0;
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding-left: 24px;
+        min-height: 8px; // keeps empty child <ol>s a valid drop target
+
+        // The root <ol> sits flush; nested ones inset to convey hierarchy.
+        &[data-parent-id="0"] {
+            padding-left: 0;
+        }
+    }
+
+    &__item {
+        margin: 4px 0;
+    }
+
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: var(--row-pad) 12px;
+        background: #fff;
+        border: 1px solid #dcdcde;
+        border-radius: 3px;
+        transition: border-color 120ms ease, box-shadow 120ms ease;
+
+        &:hover {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1 inset;
+        }
+    }
+
+    &__handle {
+        cursor: grab;
+        color: #8c8f94;
+        font-size: 14px;
+        line-height: 1;
+        user-select: none;
+        padding: 0 4px;
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    &__title {
+        font-weight: 600;
+        text-decoration: none;
+        color: #1d2327;
+
+        &:hover {
+            color: #2271b1;
+        }
+    }
+
+    &__slug {
+        font-family: var(--mua-font-mono, ui-monospace, monospace);
+        font-size: 12px;
+        background: #f0f0f1;
+        padding: 1px 6px;
+        border-radius: 2px;
+        color: #50575e;
+    }
+
+    &__status-badge {
+        font-size: 11px;
+        padding: 1px 8px;
+        border-radius: 999px;
+        background: #f0f0f1;
+        color: #50575e;
+        text-transform: lowercase;
+
+        &--publish {
+            background: #d1f4dc;
+            color: #0a5d1c;
+        }
+
+        &--draft {
+            background: #fff4d4;
+            color: #715200;
+        }
+    }
+
+    &__actions {
+        margin-left: auto;
+        display: flex;
+        gap: var(--mua-space-sm);
+        align-items: center;
+    }
+
+    &__delete {
+        color: #b32d2e;
+
+        &:hover {
+            color: #8a0000;
+        }
+    }
+
+    // SortableJS state classes — keep visuals subtle so the cue is the
+    // motion, not a flashy color shift.
+    .sortable-ghost {
+        opacity: 0.4;
+    }
+
+    .sortable-chosen .mua-screen-tree__row {
+        border-color: #2271b1;
+        box-shadow: 0 0 0 1px #2271b1 inset;
+    }
+
+    .sortable-drag .mua-screen-tree__row {
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}

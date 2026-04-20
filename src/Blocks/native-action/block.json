@@ -1,0 +1,117 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/native-action",
+    "title": "Native Action",
+    "category": "mustuse-apps-pub",
+    "description": "Invokes a native shell capability. Gated on capability advertisement. Requires a callback declaration (state or endpoint)",
+    "icon": "smartphone",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "capability",
+                "type": "select",
+                "label": "Capability",
+                "default": "share",
+                "options": [
+                    { "label": "Share",                        "value": "share" },
+                    { "label": "Camera (photo)",               "value": "camera" },
+                    { "label": "Photo library (gallery pick)", "value": "photo_library" },
+                    { "label": "Video record",                 "value": "video_record" },
+                    { "label": "Scanner (QR/Barcode)",         "value": "scanner" },
+                    { "label": "Microphone (record)",          "value": "microphone" },
+                    { "label": "Geolocation",                  "value": "geolocation" },
+                    { "label": "Biometrics (prompt)",          "value": "biometrics" },
+                    { "label": "Haptics (vibrate)",            "value": "haptics" },
+                    { "label": "Flashlight (toggle)",          "value": "flashlight" },
+                    { "label": "Dialog — alert",               "value": "dialog_alert" },
+                    { "label": "Dialog — toast",               "value": "dialog_toast" },
+                    { "label": "Browser (in-app)",             "value": "browser_inapp" },
+                    { "label": "Browser (system)",             "value": "browser_system" },
+                    { "label": "Browser (auth)",               "value": "browser_auth" }
+                ]
+            },
+            {
+                "id": "label",
+                "type": "text",
+                "label": "Button Label",
+                "default": "Tap to activate"
+            },
+            {
+                "id": "message",
+                "type": "text",
+                "label": "Message / URL",
+                "default": "",
+                "help": "Alert/toast text for dialogs, URL for browser and share, hint for scanner/camera. Unused for biometrics/haptics/flashlight."
+            },
+            {
+                "id": "intensity",
+                "type": "select",
+                "label": "Haptic Intensity",
+                "default": "medium",
+                "options": [
+                    { "label": "Light",  "value": "light" },
+                    { "label": "Medium", "value": "medium" },
+                    { "label": "Heavy",  "value": "heavy" }
+                ],
+                "help": "Only used when capability is Haptics."
+            },
+            {
+                "id": "fallbackText",
+                "type": "text",
+                "label": "Fallback Text",
+                "default": "This feature requires the mobile app.",
+                "help": "Shown when capability is unavailable on the connected shell."
+            },
+            {
+                "id": "showResult",
+                "type": "toggle",
+                "label": "Show result inline",
+                "default": false,
+                "help": "Render the most recent native callback payload under the button — useful for demo screens and debugging."
+            },
+            {
+                "id": "feedback",
+                "type": "select",
+                "label": "Post-action Feedback",
+                "default": "none",
+                "options": [
+                    { "label": "None",           "value": "none" },
+                    { "label": "Toast",          "value": "toast" },
+                    { "label": "Alert",          "value": "alert" }
+                ],
+                "help": "Optional UI confirmation rendered after the capability fires."
+            },
+            {
+                "id": "callbackType",
+                "type": "select",
+                "label": "Callback Type",
+                "default": "state",
+                "options": [
+                    { "label": "Update screen state", "value": "state" },
+                    { "label": "POST to endpoint",    "value": "endpoint" }
+                ],
+                "help": "State: result updates an in-memory slot. Endpoint: result is POSTed to a pub-relative URL."
+            },
+            {
+                "id": "callbackSlot",
+                "type": "text",
+                "label": "State Slot Name",
+                "default": "",
+                "help": "Required when callback type is 'state'. Names the in-memory slot the result writes to."
+            },
+            {
+                "id": "callbackUrl",
+                "type": "text",
+                "label": "Endpoint URL",
+                "default": "",
+                "help": "Required when callback type is 'endpoint'. Must be a pub-relative path (e.g. /apps/{app_slug}/scan-results). External URLs are rejected."
+            }
+        ],
+        "appTypes": [
+            "mobile_ios",
+            "mobile_android"
+        ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,56 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 8
+    phpVersion: 80200
+    # PHPDoc types for WP functions come from phpstan-wordpress stubs and
+    # don't always reflect runtime reality (e.g. `WP_REST_Request::get_json_params()`
+    # can return null despite the stub promising `array`). Treating PHPDoc
+    # as non-certain keeps defensive null/is_array checks from being flagged
+    # as dead code.
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - src
+        - tests/php
+    excludePaths:
+        analyseAndScan:
+            - src/Blocks/*/renderer.json
+            - tests/php/Integration/wp-tests-config.php
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    ignoreErrors:
+        # `array` PHPDoc declarations are widespread in this WordPress plugin
+        # and most carry dynamic shapes (post meta, REST payloads). Forcing
+        # `array<string, mixed>` everywhere just adds noise without adding
+        # type safety. Other level-8 guards (null safety, function
+        # signatures, return types) are still on.
+        -
+            identifier: missingType.iterableValue
+        # Tests use a stub `WP_Post::make()` factory + a test-friendly
+        # `WP_REST_Request` constructor that diverges from the real WP
+        # signatures. Both stubs are guarded by `class_exists` so they
+        # never collide at runtime, but PHPStan sees both definitions and
+        # picks the WP one. Suppressing here is cheaper than introducing
+        # a parallel naming convention for test-only helpers.
+        -
+            message: '#^Call to an undefined static method WP_Post::make\(\)\.$#'
+            paths:
+                - tests/php/*
+        -
+            message: '#^Parameter \#1 \$method of class WP_REST_Request constructor expects string, array#'
+            paths:
+                - tests/php/*
+    scanFiles:
+        - tests/stubs/wp-cli-test-extensions.php
+        - vendor/woocommerce/action-scheduler/action-scheduler.php
+        - vendor/woocommerce/action-scheduler/functions.php
+        - vendor/wp-phpunit/wp-phpunit/includes/abstract-testcase.php
+        - vendor/wp-phpunit/wp-phpunit/includes/testcase.php
+        - vendor/wp-phpunit/wp-phpunit/includes/phpunit-adapter-testcase.php
+        - vendor/wp-phpunit/wp-phpunit/includes/factory.php
+        - vendor/wp-phpunit/wp-phpunit/includes/factory/class-wp-unittest-factory.php
+        - vendor/wp-phpunit/wp-phpunit/includes/factory/class-wp-unittest-factory-for-user.php
+        - vendor/wp-phpunit/wp-phpunit/includes/factory/class-wp-unittest-factory-for-thing.php
+    reportUnmatchedIgnoredErrors: false

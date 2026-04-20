@@ -1,0 +1,39 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/device-info",
+    "title": "Device Info",
+    "category": "mustuse-apps-pub",
+    "description": "Read-only panel displaying the device's battery, platform, model, and OS version. Hydrated from the shell's Device facade.",
+    "icon": "smartphone",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "title",
+                "type": "text",
+                "label": "Title",
+                "default": "Device"
+            },
+            {
+                "id": "showBattery",
+                "type": "toggle",
+                "label": "Show battery status",
+                "default": true
+            },
+            {
+                "id": "showPlatform",
+                "type": "toggle",
+                "label": "Show platform & OS",
+                "default": true
+            },
+            {
+                "id": "showModel",
+                "type": "toggle",
+                "label": "Show device model",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": [ "device" ]
+    }
+}

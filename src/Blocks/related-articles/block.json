@@ -1,0 +1,33 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/related-articles",
+    "title": "Related Articles",
+    "category": "mustuse-apps-pub",
+    "description": "Queries articles sharing the current post's categories. Expects a `post` context (lives inside an article detail screen).",
+    "icon": "networking",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Number of Related Articles",
+                "default": 3
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            },
+            {
+                "id": "showExcerpt",
+                "type": "toggle",
+                "label": "Show Excerpt",
+                "default": false
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

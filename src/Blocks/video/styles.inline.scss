@@ -1,0 +1,16 @@
+.mua-video {
+    margin: var(--mua-space-md) 0;
+
+    &__player {
+        width: 100%;
+        border-radius: var(--mua-radius-sm);
+        background: #000;
+    }
+
+    &__caption {
+        font-size: 13px;
+        color: var(--mua-color-muted);
+        margin-top: 6px;
+        text-align: center;
+    }
+}

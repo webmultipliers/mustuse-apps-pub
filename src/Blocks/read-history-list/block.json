@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/read-history-list",
+    "title": "Reading History",
+    "category": "mustuse-apps-pub",
+    "description": "Reverse-chronological list of articles the current device has visited. Per-device, no account required.",
+    "icon": "clock",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "limit",
+                "type": "number",
+                "label": "Max Items",
+                "default": 20
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

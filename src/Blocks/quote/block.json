@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/quote",
+    "title": "Quote",
+    "category": "mustuse-apps-pub",
+    "description": "Pull-quote with optional attribution.",
+    "icon": "format-quote",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "text",
+                "type": "textarea",
+                "label": "Quote Text",
+                "default": ""
+            },
+            {
+                "id": "cite",
+                "type": "text",
+                "label": "Attribution",
+                "default": ""
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

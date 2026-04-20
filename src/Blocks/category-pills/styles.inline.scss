@@ -1,0 +1,35 @@
+.mua-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    background: var(--mua-color-surface);
+    color: var(--mua-color-accent);
+    border: 1px solid var(--mua-color-border);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.mua-category-pills {
+    display: flex;
+    gap: var(--mua-space-sm);
+    overflow-x: auto;
+    padding-bottom: var(--mua-space-sm);
+    margin-bottom: var(--mua-space-md);
+    scroll-snap-type: x mandatory;
+
+    &::-webkit-scrollbar { display: none; }
+
+    &__item {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+
+        &.is-active .mua-pill {
+            background: var(--mua-color-accent);
+            color: #fff;
+            border-color: var(--mua-color-accent);
+        }
+    }
+}

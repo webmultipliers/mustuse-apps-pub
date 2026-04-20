@@ -1,0 +1,12 @@
+.mua-section-heading {
+    margin: var(--mua-space-lg) 0 var(--mua-space-md);
+    font-weight: 800;
+    line-height: var(--mua-line-tight);
+    border-bottom: 2px solid var(--mua-color-primary);
+    padding-bottom: 4px;
+    display: inline-block;
+
+    &--h2 { font-size: 22px; }
+    &--h3 { font-size: 19px; }
+    &--h4 { font-size: 17px; }
+}

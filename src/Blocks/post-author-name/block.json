@@ -1,0 +1,27 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-author-name",
+    "title": "Post Author Name",
+    "category": "mustuse-apps-pub",
+    "description": "Renders the current context post's author display name. Optionally links to the author archive.",
+    "icon": "admin-users",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "showPrefix",
+                "type": "toggle",
+                "label": "Show \"By\" prefix",
+                "default": true
+            },
+            {
+                "id": "linkToAuthor",
+                "type": "toggle",
+                "label": "Link to Author Archive",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

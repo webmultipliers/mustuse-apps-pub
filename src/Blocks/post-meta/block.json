@@ -1,0 +1,29 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/post-meta",
+    "title": "Post Meta",
+    "category": "mustuse-apps-pub",
+    "description": "Renders a single custom-field (post meta) value by key. Only keys the publisher exposes via `mua_context_post_meta_keys` are available.",
+    "icon": "editor-code",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "metaKey",
+                "type": "text",
+                "label": "Meta Key",
+                "default": "",
+                "help": "Exact key as registered via the mua_context_post_meta_keys filter."
+            },
+            {
+                "id": "label",
+                "type": "text",
+                "label": "Label",
+                "default": "",
+                "help": "Optional prefix rendered before the value."
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

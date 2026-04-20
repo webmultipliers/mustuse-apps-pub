@@ -1,0 +1,5 @@
+{
+    "type": "list",
+    "style": "{{ attributes.style }}",
+    "items_source": { "from": "attributes.items", "split": "newline" }
+}

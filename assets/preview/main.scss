@@ -1,0 +1,605 @@
+@use '../shared/tokens';
+
+// Preview dashboard — the "control room" view a publisher lands on
+// when they click Preview on an App or Screen post. Intentionally has
+// its own visual identity (brandy, not wp-admin gray) but still built
+// on the project's design tokens.
+
+// Simulated safe-area insets. NativePHP injects the real values at
+// runtime; for preview we hardcode values representative of a modern
+// iPhone-class device so block CSS that consumes --inset-* previews
+// the same layout it will get on-device.
+:root {
+    --inset-top: 47px;
+    --inset-bottom: 34px;
+    --inset-left: 0px;
+    --inset-right: 0px;
+
+    --preview-bg: #f6f7f9;
+    --preview-ink: #0a0c10;
+    --preview-ink-muted: #64748b;
+    --preview-hairline: rgba(0, 0, 0, 0.08);
+    --preview-radius: 16px;
+    --preview-radius-lg: 24px;
+    --preview-shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --preview-shadow-lift: 0 50px 100px -20px rgba(0, 0, 0, 0.18);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--preview-bg);
+    color: var(--preview-ink);
+    font-family: var(--mua-font-body);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+// Kill theme bleed from `wp_head`-injected stylesheets. Preview pages
+// ship their own chrome.
+body {
+    &::before { content: none !important; }
+}
+
+.mua-preview {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+// ---------------------------------------------------------------------
+// Splash overlay
+// ---------------------------------------------------------------------
+
+.mua-preview-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 600ms ease;
+    color: #fff;
+
+    &.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &__logo {
+        width: 120px;
+        height: 120px;
+        border-radius: 28px;
+        background: var(--preview-splash-accent, #1d4ed8);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mua-font-display);
+        font-size: 3rem;
+        font-weight: 700;
+        box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+        animation: mua-preview-pulse 2s ease-in-out infinite;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__meta {
+        margin-top: 2rem;
+        color: rgba(255, 255, 255, 0.45);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    &__skip {
+        margin-top: 2.5rem;
+        padding: 0.5rem 1.25rem;
+        background: transparent;
+        color: rgba(255, 255, 255, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    // When the publisher has supplied splash.png we swap the logo block
+    // for a full-bleed image. Ratio matches NativePHP's splash contract
+    // (1080×1920) so what you see here is what the shell will show.
+    &--image {
+        background: #000;
+
+        .mua-preview-splash__image {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+        }
+    }
+}
+
+@keyframes mua-preview-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+// ---------------------------------------------------------------------
+// Top bar
+// ---------------------------------------------------------------------
+
+.mua-preview-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--preview-hairline);
+
+    &__brand {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+
+        &-title {
+            font-family: var(--mua-font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        &-context {
+            color: var(--preview-ink-muted);
+            font-size: 12px;
+        }
+    }
+
+    &__status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 4px 10px;
+        background: #f1f5f9;
+        border-radius: 999px;
+        color: var(--preview-ink-muted);
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+
+        &-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--mua-success);
+            box-shadow: 0 0 8px var(--mua-success);
+            animation: mua-preview-pulse 2s ease-in-out infinite;
+        }
+
+        &--draft &-dot {
+            background: var(--mua-warning);
+            box-shadow: 0 0 8px var(--mua-warning);
+            animation: none;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    &__build-id {
+        color: var(--preview-ink-muted);
+        font-size: 11px;
+        font-family: var(--mua-font-mono);
+    }
+
+    &__btn {
+        padding: 8px 16px;
+        background: var(--preview-ink);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: background 150ms ease;
+
+        &:hover {
+            background: var(--mua-accent);
+            color: #fff;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+// Grid
+// ---------------------------------------------------------------------
+
+.mua-preview-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(320px, 400px) minmax(260px, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: start;
+}
+
+@media (max-width: 1024px) {
+    .mua-preview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+// ---------------------------------------------------------------------
+// Cards (shared)
+// ---------------------------------------------------------------------
+
+.mua-preview-card {
+    background: #fff;
+    border: 1px solid var(--preview-hairline);
+    border-radius: var(--preview-radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--preview-shadow-card);
+    margin-bottom: 1.25rem;
+
+    &:last-child { margin-bottom: 0; }
+
+    &__title {
+        color: var(--preview-ink-muted);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 800;
+        margin: 0 0 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+// ---------------------------------------------------------------------
+// Left column: identity + capabilities
+// ---------------------------------------------------------------------
+
+.mua-preview-identity {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    &__icon {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 1.25rem;
+        border-radius: 24px;
+        background: var(--preview-splash-accent, #1d4ed8);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--mua-font-display);
+        font-size: 2.25rem;
+        font-weight: 700;
+        box-shadow: 0 20px 40px -10px rgba(29, 78, 216, 0.3);
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__name {
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: -0.01em;
+        margin: 0;
+    }
+
+    &__meta {
+        color: var(--preview-ink-muted);
+        font-size: 12px;
+        margin: 4px 0 0;
+        font-family: var(--mua-font-mono);
+    }
+}
+
+.mua-preview-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 10px;
+        font-size: 12px;
+    }
+
+    &__label {
+        color: var(--preview-ink-muted);
+        font-weight: 500;
+    }
+
+    &__badge {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: #64748b;
+
+        &--on {
+            background: rgba(16, 185, 129, 0.15);
+            color: #065f46;
+        }
+
+        &--warn {
+            background: rgba(219, 166, 23, 0.18);
+            color: #7a4d00;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+// Center column: device frame
+// ---------------------------------------------------------------------
+
+.mua-preview-device-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mua-preview-device {
+    width: 340px;
+    aspect-ratio: 9 / 19.5;
+    background: #000;
+    border-radius: 3rem;
+    padding: 10px;
+    box-shadow: var(--preview-shadow-lift);
+    position: relative;
+
+    &__screen {
+        width: 100%;
+        height: 100%;
+        background: var(--preview-device-bg, #fff);
+        border-radius: 2.5rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    // Status bar zone — consumes the top safe-area inset.
+    &__status {
+        height: var(--inset-top);
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding-bottom: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--preview-device-fg, #000);
+
+        &--dark { color: #fff; }
+    }
+
+    // Body occupies the remaining space.
+    &__body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 var(--inset-right) 0 var(--inset-left);
+        position: relative;
+    }
+
+    &__pane {
+        padding: 1rem 1.25rem;
+
+        &[hidden] { display: none; }
+    }
+
+    // Bottom nav sits above the home indicator zone.
+    &__nav {
+        display: flex;
+        background: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid var(--preview-hairline);
+        padding-bottom: var(--inset-bottom);
+    }
+
+    &__nav-tab {
+        flex: 1;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        color: var(--preview-ink-muted);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.4;
+        transition: opacity 120ms ease, color 120ms ease;
+
+        &:hover { opacity: 0.7; }
+
+        &.is-active {
+            opacity: 1;
+            color: var(--preview-splash-accent, #1d4ed8);
+        }
+    }
+
+    &__nav-icon {
+        font-size: 16px;
+        line-height: 1;
+    }
+}
+
+// The actual rendered screen content — WP's do_blocks() output lives
+// inside .mua-preview-device__pane. Tighten up the typography so normal
+// WP block widths don't blow out the narrow device column.
+.mua-preview-device__pane {
+    font-size: 13px;
+    line-height: 1.45;
+
+    h1, h2, h3 { line-height: 1.2; margin: 0.75em 0 0.25em; }
+    h1 { font-size: 1.4rem; }
+    h2 { font-size: 1.15rem; }
+    h3 { font-size: 1rem; }
+    p { margin: 0.5em 0; }
+    img { max-width: 100%; height: auto; border-radius: 8px; }
+
+    .wp-block-image { margin: 0.5rem 0; }
+}
+
+.mua-preview-frame-caption {
+    color: var(--preview-ink-muted);
+    font-size: 11px;
+    text-align: center;
+    font-family: var(--mua-font-mono);
+}
+
+// ---------------------------------------------------------------------
+// Right column: manifest + checklist
+// ---------------------------------------------------------------------
+
+.mua-preview-terminal {
+    background: #0f172a;
+    color: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    font-family: var(--mua-font-mono);
+    font-size: 12px;
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        &:last-child { border-bottom: none; }
+    }
+
+    &__key { color: rgba(255, 255, 255, 0.4); }
+    &__val { color: #fff; }
+    &__val--highlight { color: #60a5fa; }
+}
+
+.mua-preview-checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 8px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 10px;
+        font-size: 12px;
+    }
+
+    &__indicator {
+        flex: 0 0 auto;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #fff;
+        font-weight: 800;
+
+        &--pass { background: var(--mua-success); }
+        &--fail { background: var(--mua-danger); }
+        &--info { background: var(--mua-accent); }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__label {
+        font-weight: 600;
+        color: var(--preview-ink);
+    }
+
+    &__hint {
+        color: var(--preview-ink-muted);
+        font-size: 11px;
+        margin-top: 2px;
+    }
+}
+
+// ---------------------------------------------------------------------
+// Native-action button overlay: real behaviour runs on-device; for
+// preview we flag the button with a hover tooltip so clicks-that-do-
+// nothing don't look like broken code.
+// ---------------------------------------------------------------------
+.mua-preview-device__pane {
+    .wp-block-button__link[data-mua-capability],
+    [data-mua-capability] {
+        position: relative;
+
+        &::after {
+            content: attr(data-mua-capability) ' — runs natively on device';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: calc(100% + 6px);
+            background: var(--preview-ink);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 150ms ease;
+        }
+
+        &:hover::after { opacity: 1; }
+    }
+}

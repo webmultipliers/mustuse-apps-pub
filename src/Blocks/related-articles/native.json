@@ -1,0 +1,19 @@
+{
+    "version": 2,
+    "description": "Related articles by category. Consumes the current `post` context to find the active category and excludes the current post from results. `related=1` is a ContentMapper hook that extensions can implement.",
+    "consumes_context": "post",
+    "dataSource": {
+        "kind": "posts",
+        "endpoint": "content",
+        "method": "GET",
+        "params": {
+            "per_page": "{{ attributes.count }}",
+            "related":  "1",
+            "exclude":  "{{ context.post.id }}",
+            "category": "{{ context.post.primary_category_id }}"
+        },
+        "bind": "items",
+        "ttl": 300,
+        "swr": true
+    }
+}

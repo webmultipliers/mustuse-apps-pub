@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Iteration marker for Query Loop. The shell's QueryLoop Livewire component renders this block's innerBlocks once per item with context.post set to the current iteration. Direct rendering is a no-op.",
+    "consumes_context": "post",
+    "iterates": true
+}

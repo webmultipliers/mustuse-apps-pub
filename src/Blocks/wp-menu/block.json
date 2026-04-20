@@ -1,0 +1,32 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/wp-menu",
+    "title": "WP Menu",
+    "category": "mustuse-apps-pub",
+    "description": "Renders a WordPress-registered nav menu by theme location. Pulled live from `/menus/{location}`.",
+    "icon": "menu",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "location",
+                "type": "text",
+                "label": "Menu location",
+                "default": "primary",
+                "help": "One of the locations registered via register_nav_menus()."
+            },
+            {
+                "id": "style",
+                "type": "select",
+                "label": "Style",
+                "default": "list",
+                "options": [
+                    { "label": "List",         "value": "list" },
+                    { "label": "Inline chips", "value": "chips" }
+                ]
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

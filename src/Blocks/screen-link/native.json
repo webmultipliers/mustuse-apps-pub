@@ -1,0 +1,4 @@
+{
+    "version": 2,
+    "description": "Tappable card that navigates via Livewire's in-app router (wire:navigate). No capability triggers, no dataSource."
+}

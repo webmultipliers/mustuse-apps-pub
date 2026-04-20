@@ -1,0 +1,12 @@
+.mua-post-meta {
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    font-size: 14px;
+    margin: 0 0 var(--mua-space-sm);
+
+    &__label {
+        color: var(--mua-color-muted);
+        font-weight: 600;
+    }
+}

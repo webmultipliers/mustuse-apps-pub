@@ -1,0 +1,39 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/network-status",
+    "title": "Network Status",
+    "category": "mustuse-apps-pub",
+    "description": "Live connectivity indicator — online/offline, connection type (WiFi/Cellular), and expensive/constrained flags. Hydrated from the shell's Network facade.",
+    "icon": "rss",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "title",
+                "type": "text",
+                "label": "Title",
+                "default": "Network"
+            },
+            {
+                "id": "offlineText",
+                "type": "text",
+                "label": "Offline Text",
+                "default": "You're offline."
+            },
+            {
+                "id": "showType",
+                "type": "toggle",
+                "label": "Show connection type",
+                "default": true
+            },
+            {
+                "id": "showFlags",
+                "type": "toggle",
+                "label": "Show expensive / constrained flags",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": [ "network" ]
+    }
+}

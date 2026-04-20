@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "description": "Search results. Consumes the route context's `query` value (set by DeeplinkResolver for /search?q=...) and streams it into the /content search parameter.",
+    "consumes_context": "search",
+    "dataSource": {
+        "kind": "posts",
+        "endpoint": "content",
+        "method": "GET",
+        "params": {
+            "post_type": "{{ attributes.postType }}",
+            "per_page":  "{{ attributes.perPage }}",
+            "search":    "{{ context.search.query }}"
+        },
+        "bind": "items",
+        "ttl": 30,
+        "swr": false
+    }
+}

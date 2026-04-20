@@ -1,0 +1,33 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/author-card",
+    "title": "Author Card",
+    "category": "mustuse-apps-pub",
+    "description": "Shows an author's avatar, name, and bio. Links to the author archive.",
+    "icon": "admin-users",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "authorId",
+                "type": "number",
+                "label": "Author User ID",
+                "default": 0
+            },
+            {
+                "id": "showBio",
+                "type": "toggle",
+                "label": "Show Bio",
+                "default": true
+            },
+            {
+                "id": "showPostCount",
+                "type": "toggle",
+                "label": "Show Post Count",
+                "default": false
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

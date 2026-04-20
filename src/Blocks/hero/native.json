@@ -1,0 +1,46 @@
+{
+    "type": "container",
+    "background": "{{ attributes.imageUrl.url }}",
+    "background_mode": "cover",
+    "padding": {
+        "top": 64,
+        "bottom": 48,
+        "left": 24,
+        "right": 24
+    },
+    "children": [
+        {
+            "type": "stack",
+            "direction": "vertical",
+            "spacing": 12,
+            "align": "start",
+            "children": [
+                {
+                    "visible_when": "{{ attributes.heading }}",
+                    "type": "text",
+                    "content": "{{ attributes.heading }}",
+                    "style": "heading_1"
+                },
+                {
+                    "visible_when": "{{ attributes.subheading }}",
+                    "type": "text",
+                    "content": "{{ attributes.subheading }}",
+                    "style": "body_large"
+                },
+                {
+                    "visible_when": "{{ attributes.ctaLabel }}",
+                    "type": "button",
+                    "label": "{{ attributes.ctaLabel }}",
+                    "style": "primary",
+                    "action": {
+                        "type": "navigate",
+                        "target": {
+                            "type": "{{ attributes.ctaTargetType }}",
+                            "value": "{{ attributes.ctaTargetValue }}"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

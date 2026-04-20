@@ -1,0 +1,12 @@
+.mua-post-reading-time {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--mua-color-muted);
+    margin-right: var(--mua-space-sm);
+
+    &::before {
+        content: "⏱";
+        margin-right: 4px;
+        opacity: .6;
+    }
+}

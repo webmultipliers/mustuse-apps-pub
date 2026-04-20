@@ -1,0 +1,40 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/screen-link",
+    "title": "Screen Link",
+    "category": "mustuse-apps-pub",
+    "description": "A tappable card that navigates to another app screen. Uses Livewire's in-app routing — not the device browser — so navigation stays inside the app.",
+    "icon": "arrow-right-alt",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "label",
+                "type": "text",
+                "label": "Label",
+                "default": ""
+            },
+            {
+                "id": "description",
+                "type": "textarea",
+                "label": "Description",
+                "default": ""
+            },
+            {
+                "id": "path",
+                "type": "text",
+                "label": "Target path",
+                "default": "/",
+                "help": "App-local path like `/capture` or `/post/{slug}`. For external URLs use a native-action block with browser_inapp instead."
+            },
+            {
+                "id": "icon",
+                "type": "text",
+                "label": "Icon slug",
+                "default": ""
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "MustUse Mobile Shell",
+  "image": "mcr.microsoft.com/devcontainers/php:8.3",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "sudo install-php-extensions zip && composer install && npm install"
+}

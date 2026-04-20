@@ -1,0 +1,34 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/section",
+    "title": "Section",
+    "category": "mustuse-apps-pub",
+    "description": "Container with a heading and optional 'see all' link. Groups related blocks on a screen.",
+    "icon": "layout",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "heading",
+                "type": "text",
+                "label": "Heading",
+                "default": ""
+            },
+            {
+                "id": "seeAllLabel",
+                "type": "text",
+                "label": "See-all Link Label",
+                "default": ""
+            },
+            {
+                "id": "seeAllUrl",
+                "type": "text",
+                "label": "See-all Link URL",
+                "default": ""
+            }
+        ],
+        "innerBlocks": true,
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

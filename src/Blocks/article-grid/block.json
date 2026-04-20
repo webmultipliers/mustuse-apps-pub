@@ -1,0 +1,62 @@
+{
+    "$schema": "https://blockstudio.dev/schema/block",
+    "apiVersion": 3,
+    "name": "mustuse-apps-pub/article-grid",
+    "title": "Article Grid",
+    "category": "mustuse-apps-pub",
+    "description": "Responsive grid of articles with thumbnails — great for category landing pages and featured sections.",
+    "icon": "grid-view",
+    "blockstudio": {
+        "attributes": [
+            {
+                "id": "postType",
+                "type": "select",
+                "label": "Post Type",
+                "default": "post",
+                "options": [
+                    { "label": "Post", "value": "post" },
+                    { "label": "Page", "value": "page" }
+                ]
+            },
+            {
+                "id": "count",
+                "type": "number",
+                "label": "Number of Articles",
+                "default": 6
+            },
+            {
+                "id": "category",
+                "type": "number",
+                "label": "Category ID",
+                "default": 0,
+                "help": "Leave at 0 to show all categories."
+            },
+            {
+                "id": "columns",
+                "type": "select",
+                "label": "Columns",
+                "default": "auto",
+                "options": [
+                    { "label": "Auto (responsive)", "value": "auto" },
+                    { "label": "2", "value": "2" },
+                    { "label": "3", "value": "3" },
+                    { "label": "4", "value": "4" }
+                ]
+            },
+            {
+                "id": "showExcerpt",
+                "type": "toggle",
+                "label": "Show Excerpt",
+                "default": false
+            },
+            {
+                "id": "showThumbnail",
+                "type": "toggle",
+                "label": "Show Thumbnail",
+                "default": true
+            }
+        ],
+        "appTypes": [ "mobile_ios", "mobile_android" ],
+        "requiredCapabilities": []
+    }
+}

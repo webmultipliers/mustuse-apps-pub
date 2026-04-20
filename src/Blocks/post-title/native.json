@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "description": "Current-context post title. Static — no fetch, just reads context.post.title.",
+    "consumes_context": "post",
+    "field": "title"
+}

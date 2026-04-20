@@ -1,0 +1,125 @@
+@use '../shared/tokens';
+@use '../shared/base';
+
+// Editorial surface styles.
+// Extends the base system for the editorial admin experience.
+//
+// Note: `.mua-tab[.is-active]` and `.mua-tab-panel[.is-active]` are owned
+// by `_base.scss` (token-driven). Don't redeclare them here — last loader
+// wins, and a hardcoded override (`#007cba`) silently breaks design-token
+// theming.
+
+// Editor-specific form layout adjustments.
+.mua-editor-form {
+    .mua-form-row {
+        .mua-form-group {
+            min-width: 140px;
+        }
+    }
+}
+
+@import 'deployment-map';
+@import 'screen-tree';
+
+// Post-ship "Next steps" panel — guides the publisher through the manual
+// Bifrost setup that follows a successful repo projection.
+.mua-next-steps {
+    margin-top: var(--mua-space-md);
+    padding: var(--mua-space-lg);
+    background: #f0f9f4;
+    border-left: 4px solid #28a745;
+    border-radius: 2px;
+
+    &__title {
+        margin: 0 0 var(--mua-space-sm);
+        color: #155724;
+    }
+
+    &__subtitle {
+        margin: var(--mua-space-lg) 0 var(--mua-space-sm);
+    }
+
+    &__checklist {
+        margin: var(--mua-space-md) 0;
+        padding-left: var(--mua-space-lg);
+
+        li {
+            margin-bottom: var(--mua-space-sm);
+        }
+    }
+
+    &__cta {
+        margin-left: var(--mua-space-sm);
+        text-decoration: none;
+    }
+}
+
+.mua-env-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+
+    th,
+    td {
+        padding: var(--mua-space-xs) var(--mua-space-sm);
+        text-align: left;
+        border-bottom: 1px solid #d4e8d9;
+        vertical-align: middle;
+    }
+
+    th {
+        font-weight: 600;
+        color: #155724;
+    }
+
+    code {
+        font-family: var(--mua-font-mono, ui-monospace, SFMono-Regular, monospace);
+        background: rgba(255, 255, 255, 0.6);
+        padding: 2px 6px;
+        border-radius: 2px;
+        word-break: break-all;
+    }
+
+    &__actions {
+        white-space: nowrap;
+        text-align: right;
+        width: 1%;
+    }
+
+    &__btn {
+        margin-left: var(--mua-space-xs);
+        padding: 2px 8px;
+        font-size: 12px;
+        cursor: pointer;
+        background: #fff;
+        border: 1px solid #c3d9c8;
+        border-radius: 2px;
+
+        &:hover {
+            background: #e6ffed;
+        }
+
+        &.is-copied {
+            background: #28a745;
+            color: #fff;
+            border-color: #28a745;
+        }
+    }
+}
+
+.mua-terminal {
+    margin-top: var(--mua-space-md);
+    padding: var(--mua-space-sm);
+    font-family: var(--mua-font-mono, ui-monospace, SFMono-Regular, monospace);
+    font-size: 12px;
+    background: #f9f9f9;
+    border: 1px solid var(--mua-color-gray-dark);
+    border-radius: 2px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    // Override base dark-terminal palette to pass WCAG AA on light #f9f9f9.
+    .log-error   { color: #b0264c; } // ~5.5:1 on #f9f9f9
+    .log-info    { color: #006d8a; } // ~5.0:1 on #f9f9f9
+    .log-success { color: #1a7f37; } // ~4.6:1 on #f9f9f9
+}
