@@ -106,38 +106,38 @@ final class DemoImageFactory
      */
     private static function render(string $slug, string $title): ?string
     {
-        $img = imagecreatetruecolor(self::WIDTH, self::HEIGHT);
+        $img = \imagecreatetruecolor(self::WIDTH, self::HEIGHT);
         if (! $img instanceof \GdImage) {
             return null;
         }
-        imagesavealpha($img, false);
+        \imagesavealpha($img, false);
 
         [ $r, $g, $b ] = self::colourFor($slug);
 
         // Fill with the primary colour, then draw a 40% opaque dark
         // overlay band on the bottom third so the white title text
         // has enough contrast to read.
-        $primary = imagecolorallocate($img, $r, $g, $b);
+        $primary = \imagecolorallocate($img, $r, $g, $b);
         if ($primary === false) {
-            imagedestroy($img);
+            \imagedestroy($img);
             return null;
         }
-        imagefill($img, 0, 0, $primary);
+        \imagefill($img, 0, 0, $primary);
 
-        $overlay = imagecolorallocatealpha($img, 0, 0, 0, 60);
+        $overlay = \imagecolorallocatealpha($img, 0, 0, 0, 60);
         if ($overlay !== false) {
-            imagefilledrectangle($img, 0, (int) (self::HEIGHT * 0.62), self::WIDTH, self::HEIGHT, $overlay);
+            \imagefilledrectangle($img, 0, (int) (self::HEIGHT * 0.62), self::WIDTH, self::HEIGHT, $overlay);
         }
 
-        $fg = imagecolorallocate($img, 255, 255, 255);
+        $fg = \imagecolorallocate($img, 255, 255, 255);
         if ($fg !== false) {
             self::drawTitle($img, $title, $fg);
         }
 
         \ob_start();
-        imagepng($img);
+        \imagepng($img);
         $png = (string) \ob_get_clean();
-        imagedestroy($img);
+        \imagedestroy($img);
         return $png;
     }
 
@@ -180,7 +180,7 @@ final class DemoImageFactory
             $cursorX = (int) ((self::WIDTH - $textW) / 2);
             for ($dx = 0; $dx < $tile; $dx++) {
                 for ($dy = 0; $dy < $tile; $dy++) {
-                    imagestring($img, 5, $cursorX + $dx, $cursorY + $dy, $line, $fg);
+                    \imagestring($img, 5, $cursorX + $dx, $cursorY + $dy, $line, $fg);
                 }
             }
             $cursorY += $glyphH + 8;
