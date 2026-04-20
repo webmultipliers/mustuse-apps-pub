@@ -80,6 +80,8 @@ final class ScreenRouteProjectorTest extends TestCase
         Functions\when('get_post')->alias(
             fn (int $id): ?WP_Post => \array_key_exists($id, $this->postsById) ? $this->postsById[$id] : null
         );
+
+        Functions\when('get_post_field')->justReturn('');
     }
 
     protected function tearDown(): void

@@ -58,6 +58,7 @@ final class KitchenSinkManifestTest extends TestCase
         Functions\when('get_post_meta')->alias(
             fn (int $id, string $k) => $this->postMeta[$id][$k] ?? ''
         );
+        Functions\when('get_post_field')->justReturn('');
         Functions\when('update_post_meta')->alias(
             function (int $id, string $k, mixed $v) {
                 $this->postMeta[$id][$k] = $v;

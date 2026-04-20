@@ -72,6 +72,7 @@ final class ManifestContractTest extends TestCase
                 return $this->postMeta[$postId][$key] ?? '';
             }
         );
+        Functions\when('get_post_field')->justReturn('');
         Functions\when('update_post_meta')->alias(
             function (int $postId, string $key, mixed $value) {
                 $this->postMeta[$postId][$key] = $value;

@@ -626,20 +626,20 @@ MD;
 		$branding = \is_array( $b = $app->meta( 'branding' ) ) ? $b : [];
 		[ $r, $g, $b ] = $this->hexToRgb( (string) ( $branding['primary_color'] ?? '#1e1e1e' ) );
 
-		$img = \imagecreatetruecolor( $width, $height );
+		$img = imagecreatetruecolor( $width, $height );
 		if ( $img === false ) {
 			throw new \RuntimeException( 'GD failed to allocate placeholder canvas.' );
 		}
-		\imagesavealpha( $img, false );
+		imagesavealpha( $img, false );
 
-		$bg = \imagecolorallocate( $img, $r, $g, $b );
-		$fg = \imagecolorallocate( $img, 255, 255, 255 );
+		$bg = imagecolorallocate( $img, $r, $g, $b );
+		$fg = imagecolorallocate( $img, 255, 255, 255 );
 		if ( $bg === false || $fg === false ) {
-			\imagedestroy( $img );
+			imagedestroy( $img );
 			throw new \RuntimeException( 'GD failed to allocate placeholder colour.' );
 		}
 
-		\imagefill( $img, 0, 0, $bg );
+		imagefill( $img, 0, 0, $bg );
 
 		$char = \strtoupper( \mb_substr( \trim( $app->title() ), 0, 1 ) ?: 'A' );
 
@@ -653,14 +653,14 @@ MD;
 		$ty     = (int) ( ( $height - $glyphH ) / 2 );
 		for ( $dx = 0; $dx < $tile; $dx++ ) {
 			for ( $dy = 0; $dy < $tile; $dy++ ) {
-				\imagestring( $img, 5, $tx + $dx, $ty + $dy, $char, $fg );
+				imagestring( $img, 5, $tx + $dx, $ty + $dy, $char, $fg );
 			}
 		}
 
 		\ob_start();
-		\imagepng( $img );
+		imagepng( $img );
 		$png = (string) \ob_get_clean();
-		\imagedestroy( $img );
+		imagedestroy( $img );
 		return $png;
 	}
 
